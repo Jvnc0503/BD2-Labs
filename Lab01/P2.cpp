@@ -38,6 +38,7 @@ class Manager {
     }
 
     static Matricula readFromPos(std::ifstream &file, const size_t &pos) {
+        // Move to record position
         file.seekg(static_cast<std::streamoff>(pos), std::ios::beg);
 
         // Read "codigo" field
@@ -112,6 +113,22 @@ public:
         // Close files
         dataFile.close();
         metaFile.close();
+    }
+
+    Matricula readRecord(const size_t &pos) const {
+        // Load metadata
+        auto metadata = loadMetadata();
+
+        // Check if position is valid
+        if (pos >= metadata.size()) {
+            throw std::runtime_error("Invalid record position");
+        }
+
+        // Open data file
+        std::ifstream dataFile(dataFilename, std::ios::binary);
+
+        // Return record read from position
+        return readFromPos(dataFile, metadata[pos].pos);
     }
 };
 
