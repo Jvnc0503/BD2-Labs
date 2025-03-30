@@ -77,7 +77,41 @@ public:
                 records.emplace_back(readFromPos(dataFile, entry.pos));
             }
         }
+        // Close file
+        dataFile.close();
+
         return records;
+    }
+
+    void add(const Matricula &record) {
+        std::ofstream dataFile(dataFilename, std::ios::binary | std::ios::app);
+        std::ofstream metaFile(metaFilename, std::ios::binary | std::ios::app);
+
+        // Get current position in data file
+        size_t currentPos = dataFile.tellp();
+
+        // Get fields sizes
+        int codSize = static_cast<int>(record.codigo.size());
+        int obsSize = static_cast<int>(record.observaciones.size());
+
+        // Get record total size
+        size_t recordSize = (sizeof(int) + codSize) + sizeof(int) + sizeof(double) + (sizeof(int) + obsSize);
+
+        // Write record to data file
+        dataFile.write(reinterpret_cast<const char *>(&codSize), sizeof(int)); // Write "codigo" size
+        dataFile.write(record.codigo.c_str(), codSize);
+        dataFile.write(reinterpret_cast<const char *>(&record.ciclo), sizeof(int));
+        dataFile.write(reinterpret_cast<const char *>(&record.mensualidad), sizeof(double));
+        dataFile.write(reinterpret_cast<const char *>(&obsSize), sizeof(int)); // Write "observaciones" size
+        dataFile.write(record.observaciones.c_str(), obsSize);
+
+        // Append metadata entry
+        Metadata metaEntry = {currentPos, recordSize, true};
+        metaFile.write(reinterpret_cast<const char *>(&metaEntry), sizeof(Metadata));
+
+        // Close files
+        dataFile.close();
+        metaFile.close();
     }
 };
 
