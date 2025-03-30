@@ -153,5 +153,16 @@ public:
 };
 
 int main() {
+    Manager manager("data.bin", "metadata.bin");
+    manager.add({"A123", 1, 500.50, "First semester"});
+    manager.add({"B456", 2, 600.75, "Second semester"});
+
+    auto records = manager.load();
+    for (const auto &record : records) {
+        std::cout << "Codigo: " << record.codigo << ", Ciclo: " << record.ciclo
+                  << ", Mensualidad: " << record.mensualidad
+                  << ", Observaciones: " << record.observaciones << std::endl;
+    }
+
     return 0;
 }
