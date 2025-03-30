@@ -130,6 +130,26 @@ public:
         // Return record read from position
         return readFromPos(dataFile, metadata[pos].pos);
     }
+
+    void remove(const size_t &pos) {
+        // Load metadata
+        auto metadata = loadMetadata();
+
+        // Check if position is valid
+        if (pos >= metadata.size()) {
+            throw std::runtime_error("Invalid record position");
+        }
+
+        // Overwrite metadata
+        metadata[pos].active = false;
+        std::ofstream metaFile(metaFilename, std::ios::binary | std::ios::trunc);
+        for (const auto &entry: metadata) {
+            metaFile.write(reinterpret_cast<const char *>(&entry), sizeof(Metadata));
+        }
+
+        // Close file
+        metaFile.close();
+    }
 };
 
 int main() {
