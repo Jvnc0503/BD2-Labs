@@ -158,10 +158,10 @@ int main() {
     manager.add({"B456", 2, 600.75, "Second semester"});
 
     auto records = manager.load();
-    for (const auto &record : records) {
+    for (const auto &record: records) {
         std::cout << "Codigo: " << record.codigo << ", Ciclo: " << record.ciclo
-                  << ", Mensualidad: " << record.mensualidad
-                  << ", Observaciones: " << record.observaciones << std::endl;
+                << ", Mensualidad: " << record.mensualidad
+                << ", Observaciones: " << record.observaciones << std::endl;
     }
 
     return 0;
