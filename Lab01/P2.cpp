@@ -150,7 +150,13 @@ public:
             throw std::runtime_error("Invalid record position");
         }
 
-        // Overwrite metadata
+        // Check if record is active
+        if (metadata[pos].active == false) {
+            std::cout << "Record already removed\n";
+            return;
+        }
+
+        // Overwrite metadata file
         metadata[pos].active = false;
         std::ofstream metaFile(metaFilename, std::ios::binary | std::ios::trunc);
         for (const auto &entry: metadata) {
@@ -190,6 +196,8 @@ int main() {
     std::cout << "Test readRecord(1)\n" << "Read record: Codigo: " << record.codigo << ", Ciclo: " << record.ciclo
             << ", Mensualidad: " << record.mensualidad
             << ", Observaciones: " << record.observaciones << std::endl;
+
+    manager.remove(0);
 
     return 0;
 }
