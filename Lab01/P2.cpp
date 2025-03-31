@@ -85,11 +85,18 @@ public:
     }
 
     void add(const Matricula &record) {
-        std::ofstream dataFile(dataFilename, std::ios::binary | std::ios::app);
-        std::ofstream metaFile(metaFilename, std::ios::binary | std::ios::app);
+        // Open the file in update mode
+        std::fstream dataFile(dataFilename, std::ios::in | std::ios::out | std::ios::binary);
 
-        // Get current position in data file
-        size_t currentPos = dataFile.tellp();
+        // If file doesn't exist, create it
+        if (!dataFile) {
+            dataFile.open(dataFilename, std::ios::binary | std::ios::out);
+            dataFile.close();
+            dataFile.open(dataFilename, std::ios::in | std::ios::out | std::ios::binary);
+        }
+
+        dataFile.seekp(0, std::ios::end); // Move to the end of the file
+        size_t currentPos = dataFile.tellp(); // Get current position
 
         // Get fields sizes
         int codSize = static_cast<int>(record.codigo.size());
@@ -107,12 +114,15 @@ public:
         dataFile.write(record.observaciones.c_str(), obsSize);
 
         // Append metadata entry
+        std::ofstream metaFile(metaFilename, std::ios::binary | std::ios::app);
         Metadata metaEntry = {currentPos, recordSize, true};
         metaFile.write(reinterpret_cast<const char *>(&metaEntry), sizeof(Metadata));
 
         // Close files
         dataFile.close();
         metaFile.close();
+
+        std::cout << "Record added successfully\n";
     }
 
     Matricula readRecord(const size_t &pos) const {
@@ -157,12 +167,29 @@ int main() {
     manager.add({"A123", 1, 500.50, "First semester"});
     manager.add({"B456", 2, 600.75, "Second semester"});
 
+    std::cout << "Test load()\n";
     auto records = manager.load();
     for (const auto &record: records) {
         std::cout << "Codigo: " << record.codigo << ", Ciclo: " << record.ciclo
                 << ", Mensualidad: " << record.mensualidad
                 << ", Observaciones: " << record.observaciones << std::endl;
     }
+
+    manager.add({"C789", 3, 700.00, "Third semester"});
+    manager.remove(0);
+
+    records = manager.load();
+    std::cout << "Test load after remove(0)\n";
+    for (const auto &record: records) {
+        std::cout << "Codigo: " << record.codigo << ", Ciclo: " << record.ciclo
+                << ", Mensualidad: " << record.mensualidad
+                << ", Observaciones: " << record.observaciones << std::endl;
+    }
+
+    Matricula record = manager.readRecord(1);
+    std::cout << "Test readRecord(1)\n" << "Read record: Codigo: " << record.codigo << ", Ciclo: " << record.ciclo
+            << ", Mensualidad: " << record.mensualidad
+            << ", Observaciones: " << record.observaciones << std::endl;
 
     return 0;
 }
