@@ -24,7 +24,7 @@ class Manager {
             std::cout << "ID already present\n";
         } else if (condition > 0) {
             if (temp.right == -1) {
-                temp.left = pos;
+                temp.right = pos;
                 file.seekp(head * size);
                 file.write(reinterpret_cast<char *>(&temp), size);
                 std::cout << "Record added successfully\n";
@@ -33,7 +33,7 @@ class Manager {
             addAux(file, alumno, temp.right, pos);
         } else {
             if (temp.left == -1) {
-                temp.right = pos;
+                temp.left = pos;
                 file.seekp(head * size);
                 file.write(reinterpret_cast<char *>(&temp), size);
                 std::cout << "Record added successfully\n";
@@ -43,13 +43,25 @@ class Manager {
         }
     }
 
-    Alumno searchAux(std::ifstream &file, char id[6], long long head) {
+    Alumno searchAux(std::ifstream &file, char id[6], const long long head) {
         file.seekg(head * size);
         Alumno temp;
         file.read(reinterpret_cast<char *>(&temp), size);
         const int condition = std::strcmp(temp.id, id);
         if (condition == 0) {
             return temp;
+        } else if (condition > 0) {
+            if (temp.right == -1) {
+                std::cout << "ID not found\n";
+                return {};
+            }
+            return searchAux(file, id, temp.right);
+        } else {
+            if (temp.left == -1) {
+                std::cout << "ID not found\n";
+                return {};
+            }
+            return searchAux(file, id, temp.left);
         }
     }
 
