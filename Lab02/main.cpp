@@ -43,12 +43,13 @@ class Manager {
         }
     }
 
-    Alumno searchAux(std::ifstream &file, char id[6], const long long head) {
+    Alumno searchAux(std::ifstream &file, const char id[6], const long long head) {
         file.seekg(head * size);
         Alumno temp;
         file.read(reinterpret_cast<char *>(&temp), size);
         const int condition = std::strcmp(temp.id, id);
         if (condition == 0) {
+            std::cout << "Record found successfully\n";
             return temp;
         } else if (condition > 0) {
             if (temp.right == -1) {
@@ -87,7 +88,7 @@ public:
         file.close();
     }
 
-    Alumno search(char id[6]) {
+    Alumno search(const char id[6]) {
         std::ifstream file(filename, std::ios::binary);
         if (!file) {
             std::cout << "File not found\n";
@@ -100,5 +101,7 @@ int main() {
     Alumno alumno = {"P-271", "Josimar", 5};
     Manager manager("test.txt");
     manager.add(alumno);
+    Alumno result = manager.search("P-271");
+    std::cout << result.id << '\n' << result.name << '\n' << result.cycle << '\n';
     return 0;
 }
