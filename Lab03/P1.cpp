@@ -66,6 +66,12 @@ class Manager {
     }
 
     static void insert(const Record &record, Bucket &bucket, std::fstream &file, const long long &pos) {
+        for (int i = 0; i < bucket.count; ++i) {
+            if (bucket.records[i].id == record.id) {
+                std::cout << "Record with ID " << record.id << " already exists\n";
+                return;
+            }
+        }
         if (bucket.isFull()) {
             if (bucket.hasNext()) {
                 Bucket nextBucket = getBucket(bucket.next, file);
@@ -187,8 +193,8 @@ int main() {
 
     for (const int id: ids) Manager::insert({id});
     for (int id: ids) Manager::search(id);
-    for (int id: ids) Manager::remove(id);
-    for (int id: ids) Manager::search(id);
+    // for (int id: ids) Manager::remove(id);
+    // for (int id: ids) Manager::search(id);
 
     return 0;
 }
