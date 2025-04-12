@@ -81,18 +81,21 @@ class Manager {
                 bucket.next = nextPos;
                 file.seekp(pos);
                 file.write(reinterpret_cast<char *>(&bucket), sizeof(bucket));
+
+                std::cout << "Record with ID " << record.id << " inserted into new bucket\n";
             }
         } else {
             bucket.records[bucket.count++] = record;
             file.seekp(pos);
             file.write(reinterpret_cast<char *>(&bucket), sizeof(bucket));
+            std::cout << "Record with ID " << record.id << " inserted into bucket\n";
         }
     }
 
     static Record search(const int &id, const Bucket &bucket, std::fstream &file) {
         for (int i = 0; i < bucket.count; ++i) {
             if (bucket.records[i].id == id) {
-                file.close();
+                std::cout << "Record with ID " << id << " found\n";
                 return bucket.records[i];
             }
         }
@@ -101,7 +104,6 @@ class Manager {
             return search(id, nextBucket, file);
         }
         std::cout << "ID" << id << " not found\n";
-        file.close();
         return {};
     }
 
@@ -116,6 +118,7 @@ class Manager {
                 --bucket.count;
                 file.seekp(pos);
                 file.write(reinterpret_cast<char *>(&bucket), sizeof(bucket));
+                std::cout << "Record with ID " << id << " removed\n";
                 return;
             }
         }
