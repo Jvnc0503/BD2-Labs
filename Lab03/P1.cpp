@@ -92,6 +92,7 @@ class Manager {
     static Record search(const int &id, const Bucket &bucket, std::fstream &file) {
         for (int i = 0; i < bucket.count; ++i) {
             if (bucket.records[i].id == id) {
+                file.close();
                 return bucket.records[i];
             }
         }
@@ -100,6 +101,7 @@ class Manager {
             return search(id, nextBucket, file);
         }
         std::cout << "ID" << id << " not found\n";
+        file.close();
         return {};
     }
 
@@ -146,6 +148,8 @@ public:
         Bucket bucket = getBucket(pos, file);
         // Insert the record into the bucket recursively
         insert(record, bucket, file, pos);
+        // Close the file
+        file.close();
     }
 
     static Record search(const int &id) {
@@ -168,6 +172,8 @@ public:
         Bucket bucket = getBucket(pos, file);
         // Remove the record from the bucket recursively
         remove(id, bucket, file, pos);
+        // Close the file
+        file.close();
     }
 };
 
