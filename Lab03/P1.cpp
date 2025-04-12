@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 struct Record {
     int id;
@@ -103,7 +104,7 @@ class Manager {
             const Bucket nextBucket = getBucket(bucket.next, file);
             return search(id, nextBucket, file);
         }
-        std::cout << "ID" << id << " not found\n";
+        std::cout << "ID " << id << " not found\n";
         return {};
     }
 
@@ -127,7 +128,7 @@ class Manager {
             remove(id, nextBucket, file, bucket.next);
             return;
         }
-        std::cout << "ID" << id << " not found\n";
+        std::cout << "ID " << id << " not found\n";
     }
 
 public:
@@ -182,5 +183,12 @@ public:
 
 int main() {
     Manager manager;
+    std::vector<int> ids = {3, 6, 20, 19, 13, 45, 36, 27, 2, 50, 89, 23, 44, 71, 38, 49, 53, 25, 22, 31, 60, 85, 43};
+
+    for (const int id: ids) Manager::insert({id});
+    for (int id: ids) Manager::search(id);
+    for (int id: ids) Manager::remove(id);
+    for (int id: ids) Manager::search(id);
+
     return 0;
 }
