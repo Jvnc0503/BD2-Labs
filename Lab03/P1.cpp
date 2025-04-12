@@ -125,9 +125,6 @@ class Manager {
         std::cout << "ID" << id << " not found\n";
     }
 
-    static void reallocate(Bucket &bucket, std::fstream &file, const long &pos) {
-    }
-
 public:
     Manager() {
         // Try opening the file in editing mode
