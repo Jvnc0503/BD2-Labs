@@ -89,7 +89,18 @@ class Manager {
         }
     }
 
-    Record search(const int &id, Bucket &bucket, std::fstream &file) {
+    static Record search(const int &id, const Bucket &bucket, std::fstream &file) {
+        for (int i = 0; i < bucket.count; ++i) {
+            if (bucket.records[i].id == id) {
+                return bucket.records[i];
+            }
+        }
+        if (bucket.hasNext()) {
+            const Bucket nextBucket = getBucket(bucket.next, file);
+            return search(id, nextBucket, file);
+        }
+        std::cout << "ID" << id << " not found\n";
+        return {};
     }
 
     void remove(const int &id, Bucket &bucket, std::fstream &file, const int &pos) {
@@ -110,18 +121,26 @@ public:
         file.close(); // Close the file
     }
 
-    void insert(const Record &record) {
-        // Calculate the position of the bucket using the hash function
-        const long long pos = hash(record.id) * static_cast<long long>(sizeof(Bucket));
+    static void insert(const Record &record) {
         // Open the file in read/write mode
         std::fstream file(FILENAME, std::ios::binary | std::ios::in | std::ios::out);
+        // Calculate position using hash function
+        const long long pos = hash(record.id) * sizeof(Bucket);
         // Get the bucket at the calculated position
         Bucket bucket = getBucket(pos, file);
         // Insert the record into the bucket
         insert(record, bucket, file, pos);
     }
 
-    Record search(const int &id) {
+    static Record search(const int &id) {
+        // Open file in read mode
+        std::fstream file(FILENAME, std::ios::binary | std::ios::in);
+        // Calculate position using hash function
+        const long long pos = hash(id) * sizeof(Bucket);
+        // Get the bucket at the calculated position
+        Bucket bucket = getBucket(pos, file);
+        // Search for the record in the bucket
+        return search(id, bucket, file);
     }
 
     void remove(const int &id) {
