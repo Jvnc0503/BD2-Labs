@@ -59,6 +59,11 @@ class Manager {
         return header;
     }
 
+    static void writeHeader(std::fstream &file, const Header &header) {
+        file.seekp(0);
+        file.write(reinterpret_cast<const char *>(&header), sizeof(Header));
+    }
+
     static long long getRootPosition(std::fstream &file) {
         long long root;
         file.seekg(0);
@@ -130,12 +135,10 @@ public:
         std::fstream file(FILENAME, std::ios::binary | std::ios::in | std::ios::out);
         if (thereIsNotRoot(file)) {
             Header header = getHeader(file);
-            header.root = sizeof(Header);
-            file.seekp(0);
-            file.write(reinterpret_cast<char *>(&header), sizeof(Header));
-            Node root(record);
-            file.seekp(header.root);
-            file.write(reinterpret_cast<char *>(&root), sizeof(Node));
+            const Node root(record);
+            const long long rootPos = appendNode(file, root);
+            header.root = rootPos;
+            writeHeader(file, header);
             return;
         }
         Node root = getNode(file, getRootPosition(file));
