@@ -8,7 +8,7 @@ struct Record {
 };
 
 constexpr int BUCKET_SIZE = 4;
-constexpr std::string FILENAME = "data.txt";
+constexpr auto FILENAME = "data.txt";
 constexpr int BUCKETS = 5;
 
 struct Bucket {

@@ -3,105 +3,93 @@
 #include <fstream>
 #include <cstring>
 
-struct Alumno {
-    char id[6];
-    char name[10];
-    unsigned cycle;
-    long long left = -1;
-    long long right = -1;
+struct Record {
+    int id{};
+    char name[30]{};
+    int sold{};
+    float price{};
+    char date[10]{};
 };
 
-class Manager {
-    std::string filename;
-    const unsigned size = sizeof(Alumno);
+struct Node {
+    Record record = {};
+    int height = 0; // Height of the node
+    long long left = -1; // Left child position
+    long long right = -1; // Right child position
+    long long next = -1; // Next removed
+};
 
-    void addAux(std::fstream &file, Alumno &alumno, const long long head, const long long pos) {
-        file.seekg(head * size);
-        Alumno temp;
-        file.read(reinterpret_cast<char *>(&temp), size);
-        const int condition = std::strcmp(temp.name, alumno.name);
-        if (condition == 0) {
-            std::cout << "ID already present\n";
-        } else if (condition > 0) {
-            if (temp.right == -1) {
-                temp.right = pos;
-                file.seekp(head * size);
-                file.write(reinterpret_cast<char *>(&temp), size);
-                std::cout << "Record added successfully\n";
-                return;
-            }
-            addAux(file, alumno, temp.right, pos);
-        } else {
-            if (temp.left == -1) {
-                temp.left = pos;
-                file.seekp(head * size);
-                file.write(reinterpret_cast<char *>(&temp), size);
-                std::cout << "Record added successfully\n";
-                return;
-            }
-            addAux(file, alumno, temp.left, pos);
+struct Header {
+    long long root = -1; // Root node position
+    long long next = -1; // Next removed node position
+};
+
+constexpr auto FILENAME = "data.txt";
+
+class Manager {
+    static bool fileIsEmptyOrNonExistent(std::fstream &file) {
+        if (!file) {
+            return true;
         }
+        return file.peek() == std::ifstream::traits_type::eof();
     }
 
-    Alumno searchAux(std::ifstream &file, const char id[6], const long long head) {
-        file.seekg(head * size);
-        Alumno temp;
-        file.read(reinterpret_cast<char *>(&temp), size);
-        const int condition = std::strcmp(temp.id, id);
-        if (condition == 0) {
-            std::cout << "Record found successfully\n";
-            return temp;
-        } else if (condition > 0) {
-            if (temp.right == -1) {
-                std::cout << "ID not found\n";
-                return {};
-            }
-            return searchAux(file, id, temp.right);
-        } else {
-            if (temp.left == -1) {
-                std::cout << "ID not found\n";
-                return {};
-            }
-            return searchAux(file, id, temp.left);
-        }
+    static void createFile(std::fstream &file) {
+        file.open(FILENAME, std::ios::binary | std::ios::app);
+        Header header;
+        file.write(reinterpret_cast<char *>(&header), sizeof(Header));
+    }
+
+    static Header getHeader(std::fstream &file) {
+        Header header;
+        file.seekg(0);
+        file.read(reinterpret_cast<char *>(&header), sizeof(Header));
+        return header;
+    }
+
+    static long long getRootPosition(std::fstream &file) {
+        long long root;
+        file.seekg(0);
+        file.read(reinterpret_cast<char *>(&root), sizeof(long long));
+        return root;
+    }
+
+    static bool thereIsNotRoot(std::fstream &file) {
+        return getRootPosition(file) == -1;
+    }
+
+    static void insert(const Record &record, Node &node, std::fstream &file) {
     }
 
 public:
-    explicit Manager(std::string filename) : filename(std::move(filename)) {
-    }
-
-    void add(Alumno &alumno) {
-        std::fstream file(filename, std::ios::binary | std::ios::in | std::ios::out);
-        if (!file) {
-            file.open(filename, std::ios::binary | std::ios::out);
-            file.close();
-            file.open(filename, std::ios::binary | std::ios::in | std::ios::out);
+    Manager() {
+        std::fstream file(FILENAME, std::ios::binary | std::ios::in | std::ios::out);
+        if (fileIsEmptyOrNonExistent(file)) {
+            createFile(file);
         }
-        file.seekp(0, std::ios::end);
-
-        file.write(reinterpret_cast<char *>(&alumno), size);
-
-        if (file.tellp() != size) {
-            addAux(file, alumno, 0, file.tellp());
-        }
-
         file.close();
     }
 
-    Alumno search(const char id[6]) {
-        std::ifstream file(filename, std::ios::binary);
-        if (!file) {
-            std::cout << "File not found\n";
+    static void insert(const Record &record) {
+        std::fstream file(FILENAME, std::ios::binary | std::ios::in | std::ios::out);
+        if (thereIsNotRoot(file)) {
+            Header header = getHeader(file);
+            header.root = sizeof(Header);
+            file.seekp(0);
+            file.write(reinterpret_cast<char *>(&header), sizeof(Header));
+            Node root = {record};
+            file.seekp(header.root);
+            file.write(reinterpret_cast<char *>(&root), sizeof(Node));
+            return;
         }
-        return searchAux(file, id, 0);
+        const long long rootPos = getRootPosition(file);
+        Node root;
+        file.seekg(rootPos);
+        file.read(reinterpret_cast<char *>(&root), sizeof(Node));
+        insert(record, root, file);
     }
 };
 
 int main() {
-    Alumno alumno = {"P-271", "Josimar", 5};
-    Manager manager("test.txt");
-    manager.add(alumno);
-    Alumno result = manager.search("P-271");
-    std::cout << result.id << '\n' << result.name << '\n' << result.cycle << '\n';
     return 0;
 }
