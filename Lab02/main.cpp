@@ -17,6 +17,18 @@ struct Node {
     long long left = -1; // Left child position
     long long right = -1; // Right child position
     long long next = -1; // Next removed
+
+    bool hasLeft() {
+        return left != -1;
+    }
+
+    bool hasRight() {
+        return right != -1;
+    }
+
+    bool hasNext() {
+        return next != -1;
+    }
 };
 
 struct Header {
@@ -58,7 +70,51 @@ class Manager {
         return getRootPosition(file) == -1;
     }
 
-    static void insert(const Record &record, Node &node, std::fstream &file) {
+    static Node getNode(std::fstream &file, const long long &pos) {
+        Node node;
+        file.seekg(pos);
+        file.read(reinterpret_cast<char *>(&node), sizeof(Node));
+        return node;
+    }
+
+    static long long appendNode(std::fstream &file, const Node &node) {
+        file.seekp(0, std::ios::end);
+        const long long pos = file.tellp();
+        file.write(reinterpret_cast<const char *>(&node), sizeof(Node));
+        return pos;
+    }
+
+    static void writeNode(std::fstream &file, const Node &node, const long long &pos) {
+        file.seekp(pos);
+        file.write(reinterpret_cast<const char *>(&node), sizeof(Node));
+    }
+
+    static void insert(std::fstream &file, Node &node, long long pos, const Record &record) {
+        if (record.id == node.record.id) {
+            std::cout << "Record with ID " << record.id << " already exists.\n";
+            return;
+        }
+        if (record.id < node.record.id) {
+            if (node.hasLeft()) {
+                Node leftChild = getNode(file, node.left);
+                insert(file, leftChild, node.left, record);
+            } else {
+                const Node newNode(record);
+                const long long newPos = appendNode(file, newNode);
+                node.left = newPos;
+                writeNode(file, node, pos);
+            }
+        } else {
+            if (node.hasRight()) {
+                Node rightChild = getNode(file, node.right);
+                insert(file, rightChild, node.right, record);
+            } else {
+                const Node newNode(record);
+                const long long newPos = appendNode(file, newNode);
+                node.right = newPos;
+                writeNode(file, node, pos);
+            }
+        }
     }
 
 public:
@@ -77,16 +133,13 @@ public:
             header.root = sizeof(Header);
             file.seekp(0);
             file.write(reinterpret_cast<char *>(&header), sizeof(Header));
-            Node root = {record};
+            Node root(record);
             file.seekp(header.root);
             file.write(reinterpret_cast<char *>(&root), sizeof(Node));
             return;
         }
-        const long long rootPos = getRootPosition(file);
-        Node root;
-        file.seekg(rootPos);
-        file.read(reinterpret_cast<char *>(&root), sizeof(Node));
-        insert(record, root, file);
+        Node root = getNode(file, getRootPosition(file));
+        insert(file, root, getRootPosition(file), record);
     }
 };
 
