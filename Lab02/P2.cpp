@@ -27,10 +27,6 @@ struct Node {
     bool hasRight() const {
         return right != -1;
     }
-
-    bool hasNext() const {
-        return next != -1;
-    }
 };
 
 struct Header {
