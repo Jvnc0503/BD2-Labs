@@ -20,6 +20,11 @@ struct Node {
     long long right = -1; // Right child position
     long long next = -1; // Next removed
 
+    Node() = default;
+
+    Node(Record record): record(std::move(record)), height(0), left(-1), right(-1), next(-1) {
+    }
+
     bool hasLeft() const {
         return left != -1;
     }
@@ -92,13 +97,12 @@ class Manager {
     static long long appendNode(std::fstream &file, const Node &node) {
         Header header = getHeader(file);
         if (header.hasNext()) {
-            const long long pos = header.next;
-            const Node nextNode = getNode(file, pos);
+            const long long nextPos = header.next;
+            const Node nextNode = getNode(file, nextPos);
             header.next = nextNode.next;
             updateHeader(file, header);
-            file.seekg(pos);
-            file.write(reinterpret_cast<const char *>(&node), sizeof(Node));
-            return pos;
+            updateNode(file, node, nextPos);
+            return nextPos;
         }
         file.seekp(0, std::ios::end);
         const long long pos = file.tellp();
@@ -310,24 +314,24 @@ class Manager {
                 Header header = getHeader(file);
                 node.next = header.next;
                 header.next = pos;
-                updateNode(file, node, pos);
                 updateHeader(file, header);
+                updateNode(file, node, pos);
                 return -1;
             }
             if (!node.hasLeft()) {
                 Header header = getHeader(file);
                 node.next = header.next;
                 header.next = pos;
-                updateNode(file, node, pos);
                 updateHeader(file, header);
+                updateNode(file, node, pos);
                 return node.right;
             }
             if (!node.hasRight()) {
                 Header header = getHeader(file);
                 node.next = header.next;
                 header.next = pos;
-                updateNode(file, node, pos);
                 updateHeader(file, header);
+                updateNode(file, node, pos);
                 return node.left;
             }
             auto [successor, successorPos] = findMin(file, node.right);
