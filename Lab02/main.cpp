@@ -18,15 +18,15 @@ struct Node {
     long long right = -1; // Right child position
     long long next = -1; // Next removed
 
-    bool hasLeft() {
+    bool hasLeft() const {
         return left != -1;
     }
 
-    bool hasRight() {
+    bool hasRight() const {
         return right != -1;
     }
 
-    bool hasNext() {
+    bool hasNext() const {
         return next != -1;
     }
 };
@@ -48,7 +48,7 @@ class Manager {
 
     static void createFile(std::fstream &file) {
         Header header;
-        file.open(FILENAME, std::ios::binary | std::ios::app);
+        file.open(FILENAME, std::ios::binary | std::ios::out);
         file.write(reinterpret_cast<char *>(&header), sizeof(Header));
     }
 
@@ -229,6 +229,71 @@ class Manager {
         return balance(file, node, pos);
     }
 
+    static Record search(std::fstream &file, const Node &node, const long long &id) {
+        if (id == node.record.id) {
+            std::cout << "Record with ID " << id << " found.\n";
+            return node.record;
+        }
+        if (id < node.record.id) {
+            if (node.hasLeft()) {
+                return search(file, getNode(file, node.left), id);
+            }
+        } else if (id > node.record.id) {
+            if (node.hasRight()) {
+                return search(file, getNode(file, node.right), id);
+            }
+        }
+        std::cout << "Record with ID " << id << " not found.\n";
+        return {};
+    }
+
+    static std::pair<Node, long long> findMin(std::fstream &file, long long pos) {
+        Node node = getNode(file, pos);
+        while (node.hasLeft()) {
+            pos = node.left;
+            node = getNode(file, pos);
+        }
+        return {node, pos};
+    }
+
+    static
+
+    long long remove(std::fstream &file, Node &node, const long long &pos, const long long &id) {
+        if (id < node.record.id) {
+            if (!node.hasLeft()) {
+                std::cout << "Record with ID " << id << " not found.\n";
+                return pos;
+            }
+            Node leftChild = getNode(file, node.left);
+            node.left = remove(file, leftChild, node.left, id);
+        } else if (id > node.record.id) {
+            if (!node.hasRight()) {
+                std::cout << "Record with ID " << id << " not found.\n";
+                return pos;
+            }
+            Node rightChild = getNode(file, node.right);
+            node.right = remove(file, rightChild, node.right, id);
+        } else {
+            if (!node.hasLeft() && !node.hasRight()) {
+                return -1;
+            }
+            if (!node.hasLeft()) {
+                return node.right;
+            }
+            if (!node.hasRight()) {
+                return node.left;
+            }
+
+            auto [succ, succPos] = findMin(file, node.right);
+            node.record = succ.record;
+            Node rightChild = getNode(file, node.right);
+            node.right = remove(file, rightChild, node.right, succ.record.id);
+            updateNode(file, node, pos);
+        }
+        updateHeight(file, node);
+        return balance(file, node, pos);
+    }
+
 public:
     Manager() {
         std::fstream file(FILENAME, std::ios::binary | std::ios::in | std::ios::out);
@@ -238,7 +303,7 @@ public:
         file.close();
     }
 
-    static void insert(const Record &record) {
+    void insert(const Record &record) {
         std::fstream file(FILENAME, std::ios::binary | std::ios::in | std::ios::out);
         if (thereIsNotRoot(file)) {
             Header header = getHeader(file);
@@ -252,6 +317,30 @@ public:
         Node root = getNode(file, rootPos);
         Header header = getHeader(file);
         header.root = insert(file, root, rootPos, record);
+        updateHeader(file, header);
+    }
+
+    Record search(const long long &id) {
+        std::fstream file(FILENAME, std::ios::binary | std::ios::in);
+        if (thereIsNotRoot(file)) {
+            std::cout << "File has no records.\n";
+            return {};
+        }
+        const long long rootPos = getRootPosition(file);
+        const Node root = getNode(file, rootPos);
+        return search(file, root, id);
+    }
+
+    void remove(const long long &id) {
+        std::fstream file(FILENAME, std::ios::binary | std::ios::in | std::ios::out);
+        if (thereIsNotRoot(file)) {
+            std::cout << "File has no records.\n";
+            return;
+        }
+        const long long rootPos = getRootPosition(file);
+        Node root = getNode(file, rootPos);
+        Header header = getHeader(file);
+        header.root = remove(file, root, rootPos, id);
         updateHeader(file, header);
     }
 };
