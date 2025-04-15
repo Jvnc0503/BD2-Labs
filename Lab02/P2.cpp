@@ -111,7 +111,7 @@ class Manager {
         file.write(reinterpret_cast<const char *>(&node), sizeof(Node));
     }
 
-    static int getHeight(std::fstream &file, const long long pos) {
+    static int getHeight(std::fstream &file, const long long &pos) {
         return pos == -1 ? -1 : getNode(file, pos).height;
     }
 
@@ -219,7 +219,7 @@ class Manager {
         return pos;
     }
 
-    static long long insert(std::fstream &file, Node &node, const long long pos, const Record &record) {
+    static long long insert(std::fstream &file, Node &node, const long long &pos, const Record &record) {
         if (record.id == node.record.id) {
             std::cout << "Record with ID " << record.id << " already exists.\n";
             return pos;
@@ -262,6 +262,23 @@ class Manager {
         }
         std::cout << "Record with ID " << id << " not found.\n";
         return {};
+    }
+
+    static void searchRange(std::fstream &file, const long long &pos, const long long &min, const long long &max,
+                            std::vector<Record> &records) {
+        if (pos == -1) {
+            return;
+        }
+        const Node node = getNode(file, pos);
+        if (min < node.record.id) {
+            searchRange(file, node.left, min, max, records);
+        }
+        if (min <= node.record.id && max >= node.record.id) {
+            records.push_back(node.record);
+        }
+        if (max > node.record.id) {
+            searchRange(file, node.right, min, max, records);
+        }
     }
 
     static std::pair<Node, long long> findMin(std::fstream &file, long long pos) {
@@ -373,6 +390,19 @@ public:
         file.close();
     }
 
+    std::vector<Record> searchRange(const long long &min, const long long &max) {
+        std::fstream file(FILENAME, std::ios::binary | std::ios::in);
+        std::vector<Record> records = {};
+
+        if (thereIsNotRoot(file)) {
+            std::cout << "File has no records.\n";
+            return records;
+        }
+        long long rootPos = getRootPosition(file);
+        searchRange(file, rootPos, min, max, records);
+        return records;
+    }
+
     void loadCSV(const std::string &dataset = DATASET) {
         std::ifstream csv(dataset);
         if (!csv.is_open()) {
@@ -447,5 +477,17 @@ int main() {
             << ", Sold: " << record.sold << ", Price: " << record.price
             << ", Date: " << record.date << "\n";
     std::cout << "Search time: " << duration.count() << " ns\n\n";
+
+    start = std::chrono::high_resolution_clock::now();
+    std::vector<Record> records = manager.searchRange(100, 200);
+    end = std::chrono::high_resolution_clock::now();
+    duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+    std::cout << "Records in range [100, 200]:\n";
+    for (const auto &rec: records) {
+        std::cout << "ID: " << rec.id << ", Name: " << rec.name
+                << ", Sold: " << rec.sold << ", Price: " << rec.price
+                << ", Date: " << rec.date << "\n";
+    }
+    std::cout << "Range search time: " << duration.count() << " ns\n\n";
     return 0;
 }
