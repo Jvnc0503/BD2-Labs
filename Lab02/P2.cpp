@@ -22,7 +22,7 @@ struct Node {
 
     Node() = default;
 
-    Node(Record record): record(std::move(record)), height(0), left(-1), right(-1), next(-1) {
+    explicit Node(const Record &record): record(record), height(0), left(-1), right(-1), next(-1) {
     }
 
     bool hasLeft() const {
