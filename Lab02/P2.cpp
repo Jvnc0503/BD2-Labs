@@ -479,15 +479,16 @@ int main() {
     std::cout << "Search time: " << duration.count() << " ns\n\n";
 
     start = std::chrono::high_resolution_clock::now();
-    std::vector<Record> records = manager.searchRange(100, 200);
+    std::vector<Record> records = manager.searchRange(200, 300);
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-    std::cout << "Records in range [100, 200]:\n";
+    std::cout << "Records in range [200, 300]:\n";
     for (const auto &rec: records) {
         std::cout << "ID: " << rec.id << ", Name: " << rec.name
                 << ", Sold: " << rec.sold << ", Price: " << rec.price
                 << ", Date: " << rec.date << "\n";
     }
+    std::cout << "Total records found: " << records.size() << "\n";
     std::cout << "Range search time: " << duration.count() << " ns\n\n";
     return 0;
 }
