@@ -419,9 +419,18 @@ public:
 int main() {
     Manager manager;
     auto start = std::chrono::high_resolution_clock::now();
-    manager.loadCSV();
+    // manager.loadCSV();
     auto end = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    std::cout << "CSV file loaded in " << duration.count() << " ms\n";
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+    // std::cout << "CSV file loaded in " << duration.count() << " ms\n";
+
+    start = std::chrono::high_resolution_clock::now();
+    Record record = manager.search(250);
+    end = std::chrono::high_resolution_clock::now();
+    duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+    std::cout << "ID: " << record.id << ", Name: " << record.name
+            << ", Sold: " << record.sold << ", Price: " << record.price
+            << ", Date: " << record.date << "\n";
+    std::cout << "Elapsed time: " << duration.count() << " ns\n";
     return 0;
 }
