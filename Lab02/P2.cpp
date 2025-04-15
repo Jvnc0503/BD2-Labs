@@ -42,8 +42,8 @@ struct Header {
     }
 };
 
-constexpr auto FILENAME = "data.txt";
-constexpr auto DATASET = "sales_dataset.csv";
+constexpr auto FILENAME = "../data.txt";
+constexpr auto DATASET = "../sales_dataset.csv";
 
 class Manager {
     static bool fileIsEmptyOrNonExistent(std::fstream &file) {
@@ -373,7 +373,7 @@ public:
         file.close();
     }
 
-    void loadFromCSV(const std::string &dataset = DATASET) {
+    void loadCSV(const std::string &dataset = DATASET) {
         std::ifstream csv(dataset);
         if (!csv.is_open()) {
             std::cout << "CSV file could not be opened.\n";
@@ -417,5 +417,11 @@ public:
 };
 
 int main() {
+    Manager manager;
+    auto start = std::chrono::high_resolution_clock::now();
+    manager.loadCSV();
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    std::cout << "CSV file loaded in " << duration.count() << " ms\n";
     return 0;
 }
