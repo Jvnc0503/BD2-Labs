@@ -252,18 +252,19 @@ class Manager {
         return balance(file, node, pos);
     }
 
-    static Record search(std::fstream &file, const Node &node, const long long &id) {
+    static Record search(std::fstream &file, const long long &pos, const long long &id) {
+        const Node node = getNode(file, pos);
         if (id == node.record.id) {
             std::cout << "Record with ID " << id << " found.\n";
             return node.record;
         }
         if (id < node.record.id) {
             if (node.hasLeft()) {
-                return search(file, getNode(file, node.left), id);
+                return search(file, node.left, id);
             }
         } else if (id > node.record.id) {
             if (node.hasRight()) {
-                return search(file, getNode(file, node.right), id);
+                return search(file, node.right, id);
             }
         }
         std::cout << "Record with ID " << id << " not found.\n";
@@ -373,9 +374,7 @@ public:
             std::cout << "File has no records.\n";
             return {};
         }
-        const long long rootPos = getRootPos(file);
-        const Node root = getNode(file, rootPos);
-        return search(file, root, id);
+        return search(file, getRootPos(file), id);
     }
 
     void remove(const long long &id) {
@@ -478,6 +477,6 @@ int main() {
     }
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-    std::cout << "All records removed in " << duration.count() << " ns\n\n";
+    std::cout << "All records removed in " << duration.count() << " ns\n";
     return 0;
 }
