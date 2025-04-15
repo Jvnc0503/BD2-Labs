@@ -2,6 +2,8 @@
 #include <utility>
 #include <fstream>
 #include <cstring>
+#include <sstream>
+#include <chrono>
 
 struct Record {
     int id{};
@@ -41,6 +43,7 @@ struct Header {
 };
 
 constexpr auto FILENAME = "data.txt";
+constexpr auto DATASET = "sales_dataset.csv";
 
 class Manager {
     static bool fileIsEmptyOrNonExistent(std::fstream &file) {
@@ -369,29 +372,50 @@ public:
         updateHeader(file, header);
         file.close();
     }
+
+    void loadFromCSV(const std::string &dataset = DATASET) {
+        std::ifstream csv(dataset);
+        if (!csv.is_open()) {
+            std::cout << "CSV file could not be opened.\n";
+            return;
+        }
+
+        std::string line;
+        std::getline(csv, line);
+
+        while (std::getline(csv, line)) {
+            std::istringstream ss(line);
+            std::string token;
+            Record record;
+
+            // ID
+            std::getline(ss, token, ',');
+            record.id = std::stoi(token);
+
+            // Name
+            std::getline(ss, token, ',');
+            std::strncpy(record.name, token.c_str(), sizeof(record.name) - 1);
+            record.name[sizeof(record.name) - 1] = '\0';
+
+            // Sold
+            std::getline(ss, token, ',');
+            record.sold = std::stoi(token);
+
+            // Price
+            std::getline(ss, token, ',');
+            record.price = std::stof(token);
+
+            // Date
+            std::getline(ss, token, ',');
+            std::strncpy(record.date, token.c_str(), sizeof(record.date) - 1);
+            record.date[sizeof(record.date) - 1] = '\0';
+
+            insert(record);
+        }
+        csv.close();
+    }
 };
 
 int main() {
-    Manager manager;
-    Record records[10];
-
-    for (int i = 0; i < 10; i++) {
-        records[i].id = i + 1;
-        std::string name = "Record" + std::to_string(i + 1);
-        std::strncpy(records[i].name, name.c_str(), sizeof(records[i].name) - 1);
-        records[i].sold = i * 10;
-        records[i].price = 10.0f + i;
-        std::string date = "2023-10-" + std::to_string(i + 1);
-        std::strncpy(records[i].date, date.c_str(), sizeof(records[i].date) - 1);
-    }
-
-    for (const auto &record: records) {
-        manager.insert(record);
-    }
-
-    for (auto &record: records) {
-        Record found = manager.search(record.id);
-    }
-
     return 0;
 }
