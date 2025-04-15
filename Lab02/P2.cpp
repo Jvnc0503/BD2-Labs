@@ -79,6 +79,13 @@ class Manager {
         return getRootPos(file) == -1;
     }
 
+    static long long getHeaderNext(std::fstream &file) {
+        long long next;
+        file.seekg(sizeof(long long));
+        file.read(reinterpret_cast<char *>(&next), sizeof(long long));
+        return next;
+    }
+
     static void updateHeaderNext(std::fstream &file, long long pos) {
         file.seekp(sizeof(long long));
         file.write(reinterpret_cast<char *>(&pos), sizeof(long long));
