@@ -52,6 +52,7 @@ class Manager {
     static void createFile(std::fstream &file) {
         Header header;
         file.open(FILENAME, std::ios::binary | std::ios::out);
+        file.seekp(0);
         file.write(reinterpret_cast<char *>(&header), sizeof(Header));
     }
 
@@ -62,16 +63,16 @@ class Manager {
         return header;
     }
 
-    static void updateRootPos(std::fstream &file, long long pos) {
-        file.seekp(0);
-        file.write(reinterpret_cast<char *>(&pos), sizeof(long long));
-    }
-
     static long long getRootPos(std::fstream &file) {
         long long root;
         file.seekg(0);
         file.read(reinterpret_cast<char *>(&root), sizeof(long long));
         return root;
+    }
+
+    static void updateRootPos(std::fstream &file, long long pos) {
+        file.seekp(0);
+        file.write(reinterpret_cast<char *>(&pos), sizeof(long long));
     }
 
     static bool thereIsNotRoot(std::fstream &file) {
