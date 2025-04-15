@@ -20,11 +20,6 @@ struct Node {
     long long right = -1; // Right child position
     long long next = -1; // Next removed
 
-    Node() = default;
-
-    explicit Node(const Record &record): record(record), height(0), left(-1), right(-1), next(-1) {
-    }
-
     bool hasLeft() const {
         return left != -1;
     }
@@ -358,9 +353,7 @@ public:
     void insert(const Record &record) {
         std::fstream file(FILENAME, std::ios::binary | std::ios::in | std::ios::out);
         if (thereIsNotRoot(file)) {
-            Header header = getHeader(file);
-            const Node root(record);
-            const long long rootPos = appendNode(file, root);
+            const long long rootPos = appendNode(file, {record});
             updateRootPos(file, rootPos);
             return;
         }
