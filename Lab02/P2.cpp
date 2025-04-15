@@ -99,9 +99,8 @@ class Manager {
     }
 
     static long long appendNode(std::fstream &file, const Node &node) {
-        Header header = getHeader(file);
-        if (header.hasNext()) {
-            const long long nextPos = header.next;
+        const long long nextPos = getHeaderNext(file);
+        if (nextPos != -1) {
             const Node nextNode = getNode(file, nextPos);
             updateHeaderNext(file, nextNode.next);
             updateNode(file, node, nextPos);
