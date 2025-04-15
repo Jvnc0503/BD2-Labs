@@ -372,5 +372,26 @@ public:
 };
 
 int main() {
+    Manager manager;
+    Record records[10];
+
+    for (int i = 0; i < 10; i++) {
+        records[i].id = i + 1;
+        std::string name = "Record" + std::to_string(i + 1);
+        std::strncpy(records[i].name, name.c_str(), sizeof(records[i].name) - 1);
+        records[i].sold = i * 10;
+        records[i].price = 10.0f + i;
+        std::string date = "2023-10-" + std::to_string(i + 1);
+        std::strncpy(records[i].date, date.c_str(), sizeof(records[i].date) - 1);
+    }
+
+    for (const auto &record: records) {
+        manager.insert(record);
+    }
+
+    for (auto &record: records) {
+        Record found = manager.search(record.id);
+    }
+
     return 0;
 }
