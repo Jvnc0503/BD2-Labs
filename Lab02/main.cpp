@@ -47,8 +47,8 @@ class Manager {
     }
 
     static void createFile(std::fstream &file) {
-        file.open(FILENAME, std::ios::binary | std::ios::app);
         Header header;
+        file.open(FILENAME, std::ios::binary | std::ios::app);
         file.write(reinterpret_cast<char *>(&header), sizeof(Header));
     }
 
@@ -59,7 +59,7 @@ class Manager {
         return header;
     }
 
-    static void writeHeader(std::fstream &file, const Header &header) {
+    static void updateHeader(std::fstream &file, const Header &header) {
         file.seekp(0);
         file.write(reinterpret_cast<const char *>(&header), sizeof(Header));
     }
@@ -89,37 +89,144 @@ class Manager {
         return pos;
     }
 
-    static void writeNode(std::fstream &file, const Node &node, const long long &pos) {
+    static void updateNode(std::fstream &file, const Node &node, const long long &pos) {
         file.seekp(pos);
         file.write(reinterpret_cast<const char *>(&node), sizeof(Node));
     }
 
-    static void insert(std::fstream &file, Node &node, long long pos, const Record &record) {
+    static int getHeight(std::fstream &file, const long long pos) {
+        return pos == -1 ? -1 : getNode(file, pos).height;
+    }
+
+    static void updateHeight(std::fstream &file, Node &node) {
+        node.height = 1 + std::max(getHeight(file, node.left), getHeight(file, node.right));
+    }
+
+    static int getBalance(std::fstream &file, const Node &node) {
+        return getHeight(file, node.left) - getHeight(file, node.right);
+    }
+
+    static long long LL(std::fstream &file, Node &A, const long long &posA) {
+        const long long posB = A.left;
+        Node B = getNode(file, posB);
+
+        A.left = B.right;
+        B.right = posA;
+
+        updateHeight(file, A);
+        updateHeight(file, B);
+
+        updateNode(file, A, posA);
+        updateNode(file, B, posB);
+
+        return posB;
+    }
+
+    static long long LR(std::fstream &file, Node &A, const long long &posA) {
+        const long long posB = A.left;
+        Node B = getNode(file, posB);
+        const long long posC = B.right;
+        Node C = getNode(file, posC);
+
+        B.right = C.left;
+        C.left = posB;
+        A.left = C.right;
+        C.right = posA;
+
+        updateHeight(file, A);
+        updateHeight(file, B);
+        updateHeight(file, C);
+
+        updateNode(file, A, posA);
+        updateNode(file, B, posB);
+        updateNode(file, C, posC);
+
+        return posC;
+    }
+
+    static long long RR(std::fstream &file, Node &A, const long long &posA) {
+        const long long posB = A.right;
+        Node B = getNode(file, posB);
+
+        A.right = B.left;
+        B.left = posA;
+
+        updateHeight(file, A);
+        updateHeight(file, B);
+
+        updateNode(file, A, posA);
+        updateNode(file, B, posB);
+
+        return posB;
+    }
+
+    static long long RL(std::fstream &file, Node &A, const long long &posA) {
+        const long long posB = A.right;
+        Node B = getNode(file, posB);
+        const long long posC = B.left;
+        Node C = getNode(file, posC);
+
+        B.left = C.right;
+        C.right = posB;
+        A.right = C.left;
+        C.left = posA;
+
+        updateHeight(file, A);
+        updateHeight(file, B);
+        updateHeight(file, C);
+
+        updateNode(file, A, posA);
+        updateNode(file, B, posB);
+        updateNode(file, C, posC);
+
+        return posC;
+    }
+
+    static long long balance(std::fstream &file, Node &node, const long long &pos) {
+        const int factor = getBalance(file, node);
+        if (factor > 1) {
+            const Node leftChild = getNode(file, node.left);
+            if (getBalance(file, leftChild) >= 0) {
+                return LL(file, node, pos);
+            }
+            return LR(file, node, pos);
+        }
+        if (factor < -1) {
+            const Node rightChild = getNode(file, node.right);
+            if (getBalance(file, rightChild) <= 0) {
+                return RR(file, node, pos);
+            }
+            return RL(file, node, pos);
+        }
+        updateNode(file, node, pos);
+        return pos;
+    }
+
+    static long long insert(std::fstream &file, Node &node, const long long pos, const Record &record) {
         if (record.id == node.record.id) {
             std::cout << "Record with ID " << record.id << " already exists.\n";
-            return;
+            return pos;
         }
         if (record.id < node.record.id) {
             if (node.hasLeft()) {
                 Node leftChild = getNode(file, node.left);
-                insert(file, leftChild, node.left, record);
+                node.left = insert(file, leftChild, node.left, record);
             } else {
-                const Node newNode(record);
-                const long long newPos = appendNode(file, newNode);
-                node.left = newPos;
-                writeNode(file, node, pos);
+                const Node newNode = {record};
+                node.left = appendNode(file, newNode);
             }
         } else {
             if (node.hasRight()) {
                 Node rightChild = getNode(file, node.right);
-                insert(file, rightChild, node.right, record);
+                node.right = insert(file, rightChild, node.right, record);
             } else {
-                const Node newNode(record);
-                const long long newPos = appendNode(file, newNode);
-                node.right = newPos;
-                writeNode(file, node, pos);
+                const Node newNode = {record};
+                node.right = appendNode(file, newNode);
             }
         }
+        updateHeight(file, node);
+        updateNode(file, node, pos);
+        return balance(file, node, pos);
     }
 
 public:
@@ -138,11 +245,14 @@ public:
             const Node root(record);
             const long long rootPos = appendNode(file, root);
             header.root = rootPos;
-            writeHeader(file, header);
+            updateHeader(file, header);
             return;
         }
-        Node root = getNode(file, getRootPosition(file));
-        insert(file, root, getRootPosition(file), record);
+        const long long rootPos = getRootPosition(file);
+        Node root = getNode(file, rootPos);
+        Header header = getHeader(file);
+        header.root = insert(file, root, rootPos, record);
+        updateHeader(file, header);
     }
 };
 
