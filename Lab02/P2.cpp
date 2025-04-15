@@ -419,10 +419,10 @@ public:
 int main() {
     Manager manager;
     auto start = std::chrono::high_resolution_clock::now();
-    // manager.loadCSV();
+    manager.loadCSV();
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-    // std::cout << "CSV file loaded in " << duration.count() << " ms\n";
+    std::cout << "CSV file loaded in " << duration.count() << " ns\n\n";
 
     start = std::chrono::high_resolution_clock::now();
     Record record = manager.search(250);
@@ -431,6 +431,21 @@ int main() {
     std::cout << "ID: " << record.id << ", Name: " << record.name
             << ", Sold: " << record.sold << ", Price: " << record.price
             << ", Date: " << record.date << "\n";
-    std::cout << "Elapsed time: " << duration.count() << " ns\n";
+    std::cout << "Search time: " << duration.count() << " ns\n\n";
+
+    start = std::chrono::high_resolution_clock::now();
+    manager.remove(250);
+    end = std::chrono::high_resolution_clock::now();
+    duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+    std::cout << "Record with ID 250 removed in " << duration.count() << " ns\n\n";
+
+    start = std::chrono::high_resolution_clock::now();
+    record = manager.search(250);
+    end = std::chrono::high_resolution_clock::now();
+    duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+    std::cout << "ID: " << record.id << ", Name: " << record.name
+            << ", Sold: " << record.sold << ", Price: " << record.price
+            << ", Date: " << record.date << "\n";
+    std::cout << "Search time: " << duration.count() << " ns\n\n";
     return 0;
 }
