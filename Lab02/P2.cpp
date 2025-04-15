@@ -34,6 +34,10 @@ struct Node {
 struct Header {
     long long root = -1; // Root node position
     long long next = -1; // Next removed node position
+
+    bool hasNext() const {
+        return next != -1;
+    }
 };
 
 constexpr auto FILENAME = "data.txt";
@@ -83,6 +87,16 @@ class Manager {
     }
 
     static long long appendNode(std::fstream &file, const Node &node) {
+        Header header = getHeader(file);
+        if (header.hasNext()) {
+            const long long pos = header.next;
+            const Node nextNode = getNode(file, pos);
+            header.next = nextNode.next;
+            updateHeader(file, header);
+            file.seekp(pos);
+            file.write(reinterpret_cast<const char *>(&node), sizeof(Node));
+            return pos;
+        }
         file.seekp(0, std::ios::end);
         const long long pos = file.tellp();
         file.write(reinterpret_cast<const char *>(&node), sizeof(Node));
@@ -256,9 +270,7 @@ class Manager {
         return {node, pos};
     }
 
-    static
-
-    long long remove(std::fstream &file, Node &node, const long long &pos, const long long &id) {
+    static long long remove(std::fstream &file, Node &node, const long long &pos, const long long &id) {
         if (id < node.record.id) {
             if (!node.hasLeft()) {
                 std::cout << "Record with ID " << id << " not found.\n";
@@ -274,20 +286,32 @@ class Manager {
             Node rightChild = getNode(file, node.right);
             node.right = remove(file, rightChild, node.right, id);
         } else {
+            Header header = getHeader(file);
             if (!node.hasLeft() && !node.hasRight()) {
+                node.next = header.next;
+                header.next = pos;
+                updateNode(file, node, pos);
+                updateHeader(file, header);
                 return -1;
             }
             if (!node.hasLeft()) {
+                node.next = header.next;
+                header.next = pos;
+                updateNode(file, node, pos);
+                updateHeader(file, header);
                 return node.right;
             }
             if (!node.hasRight()) {
+                node.next = header.next;
+                header.next = pos;
+                updateNode(file, node, pos);
+                updateHeader(file, header);
                 return node.left;
             }
-
-            auto [succ, succPos] = findMin(file, node.right);
-            node.record = succ.record;
+            auto [successor, successorPos] = findMin(file, node.right);
+            node.record = successor.record;
             Node rightChild = getNode(file, node.right);
-            node.right = remove(file, rightChild, node.right, succ.record.id);
+            node.right = remove(file, rightChild, node.right, successor.record.id);
             updateNode(file, node, pos);
         }
         updateHeight(file, node);
@@ -318,6 +342,7 @@ public:
         Header header = getHeader(file);
         header.root = insert(file, root, rootPos, record);
         updateHeader(file, header);
+        file.close();
     }
 
     Record search(const long long &id) {
@@ -342,6 +367,7 @@ public:
         Header header = getHeader(file);
         header.root = remove(file, root, rootPos, id);
         updateHeader(file, header);
+        file.close();
     }
 };
 
