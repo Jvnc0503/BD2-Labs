@@ -67,7 +67,7 @@ class Manager {
     }
 
     static void updateHeader(std::fstream &file, const Header &header) {
-        file.seekp(0);
+        file.seekg(0);
         file.write(reinterpret_cast<const char *>(&header), sizeof(Header));
     }
 
@@ -96,7 +96,7 @@ class Manager {
             const Node nextNode = getNode(file, pos);
             header.next = nextNode.next;
             updateHeader(file, header);
-            file.seekp(pos);
+            file.seekg(pos);
             file.write(reinterpret_cast<const char *>(&node), sizeof(Node));
             return pos;
         }
@@ -306,8 +306,8 @@ class Manager {
             Node rightChild = getNode(file, node.right);
             node.right = remove(file, rightChild, node.right, id);
         } else {
-            Header header = getHeader(file);
             if (!node.hasLeft() && !node.hasRight()) {
+                Header header = getHeader(file);
                 node.next = header.next;
                 header.next = pos;
                 updateNode(file, node, pos);
@@ -315,6 +315,7 @@ class Manager {
                 return -1;
             }
             if (!node.hasLeft()) {
+                Header header = getHeader(file);
                 node.next = header.next;
                 header.next = pos;
                 updateNode(file, node, pos);
@@ -322,6 +323,7 @@ class Manager {
                 return node.right;
             }
             if (!node.hasRight()) {
+                Header header = getHeader(file);
                 node.next = header.next;
                 header.next = pos;
                 updateNode(file, node, pos);
@@ -351,7 +353,7 @@ public:
         std::fstream file(FILENAME, std::ios::binary | std::ios::in | std::ios::out);
         if (thereIsNotRoot(file)) {
             Header header = getHeader(file);
-            const Node root(record);
+            const Node root = {record};
             const long long rootPos = appendNode(file, root);
             header.root = rootPos;
             updateHeader(file, header);
