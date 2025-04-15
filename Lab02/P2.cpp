@@ -448,6 +448,7 @@ public:
 
 int main() {
     Manager manager;
+
     auto start = std::chrono::high_resolution_clock::now();
     manager.loadCSV();
     auto end = std::chrono::high_resolution_clock::now();
@@ -464,31 +465,18 @@ int main() {
     std::cout << "Search time: " << duration.count() << " ns\n\n";
 
     start = std::chrono::high_resolution_clock::now();
-    manager.remove(250);
+    std::vector<Record> records = manager.searchRange(250, 750);
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-    std::cout << "Record with ID 250 removed in " << duration.count() << " ns\n\n";
-
-    start = std::chrono::high_resolution_clock::now();
-    record = manager.search(250);
-    end = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-    std::cout << "ID: " << record.id << ", Name: " << record.name
-            << ", Sold: " << record.sold << ", Price: " << record.price
-            << ", Date: " << record.date << "\n";
-    std::cout << "Search time: " << duration.count() << " ns\n\n";
-
-    start = std::chrono::high_resolution_clock::now();
-    std::vector<Record> records = manager.searchRange(200, 300);
-    end = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-    std::cout << "Records in range [200, 300]:\n";
-    for (const auto &[id, name, sold, price, date]: records) {
-        std::cout << "ID: " << id << ", Name: " << name
-                << ", Sold: " << sold << ", Price: " << price
-                << ", Date: " << date << "\n";
-    }
-    std::cout << "Total records found: " << records.size() << "\n";
+    std::cout << "Total records found in range [250, 750]: " << records.size() << "\n";
     std::cout << "Range search time: " << duration.count() << " ns\n\n";
+
+    start = std::chrono::high_resolution_clock::now();
+    for (int i = 1; i <= 1000; i++) {
+        manager.remove(i);
+    }
+    end = std::chrono::high_resolution_clock::now();
+    duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+    std::cout << "All records removed in " << duration.count() << " ns\n\n";
     return 0;
 }
