@@ -71,12 +71,12 @@ class Manager {
         return header;
     }
 
-    static void updateHeader(std::fstream &file, const Header &header) {
-        file.seekg(0);
-        file.write(reinterpret_cast<const char *>(&header), sizeof(Header));
+    static void updateRootPos(std::fstream &file, long long pos) {
+        file.seekp(0);
+        file.write(reinterpret_cast<char *>(&pos), sizeof(long long));
     }
 
-    static long long getRootPosition(std::fstream &file) {
+    static long long getRootPos(std::fstream &file) {
         long long root;
         file.seekg(0);
         file.read(reinterpret_cast<char *>(&root), sizeof(long long));
@@ -84,7 +84,12 @@ class Manager {
     }
 
     static bool thereIsNotRoot(std::fstream &file) {
-        return getRootPosition(file) == -1;
+        return getRootPos(file) == -1;
+    }
+
+    static void updateHeaderNext(std::fstream &file, long long pos) {
+        file.seekp(sizeof(long long));
+        file.write(reinterpret_cast<char *>(&pos), sizeof(long long));
     }
 
     static Node getNode(std::fstream &file, const long long &pos) {
@@ -99,8 +104,7 @@ class Manager {
         if (header.hasNext()) {
             const long long nextPos = header.next;
             const Node nextNode = getNode(file, nextPos);
-            header.next = nextNode.next;
-            updateHeader(file, header);
+            updateHeaderNext(file, nextNode.next);
             updateNode(file, node, nextPos);
             return nextPos;
         }
@@ -313,24 +317,21 @@ class Manager {
             if (!node.hasLeft() && !node.hasRight()) {
                 Header header = getHeader(file);
                 node.next = header.next;
-                header.next = pos;
-                updateHeader(file, header);
+                updateHeaderNext(file, pos);
                 updateNode(file, node, pos);
                 return -1;
             }
             if (!node.hasLeft()) {
                 Header header = getHeader(file);
                 node.next = header.next;
-                header.next = pos;
-                updateHeader(file, header);
+                updateHeaderNext(file, pos);
                 updateNode(file, node, pos);
                 return node.right;
             }
             if (!node.hasRight()) {
                 Header header = getHeader(file);
                 node.next = header.next;
-                header.next = pos;
-                updateHeader(file, header);
+                updateHeaderNext(file, pos);
                 updateNode(file, node, pos);
                 return node.left;
             }
@@ -338,7 +339,8 @@ class Manager {
             node.record = successor.record;
             Node rightChild = getNode(file, node.right);
             node.right = remove(file, rightChild, node.right, successor.record.id);
-            updateNode(file, node, pos);
+            updateHeight(file, node);
+            return balance(file, node, pos);
         }
         updateHeight(file, node);
         return balance(file, node, pos);
@@ -357,17 +359,15 @@ public:
         std::fstream file(FILENAME, std::ios::binary | std::ios::in | std::ios::out);
         if (thereIsNotRoot(file)) {
             Header header = getHeader(file);
-            const Node root = {record};
+            const Node root(record);
             const long long rootPos = appendNode(file, root);
-            header.root = rootPos;
-            updateHeader(file, header);
+            updateRootPos(file, rootPos);
             return;
         }
-        const long long rootPos = getRootPosition(file);
+        long long rootPos = getRootPos(file);
         Node root = getNode(file, rootPos);
-        Header header = getHeader(file);
-        header.root = insert(file, root, rootPos, record);
-        updateHeader(file, header);
+        rootPos = insert(file, root, rootPos, record);
+        updateRootPos(file, rootPos);
         file.close();
     }
 
@@ -377,7 +377,7 @@ public:
             std::cout << "File has no records.\n";
             return {};
         }
-        const long long rootPos = getRootPosition(file);
+        const long long rootPos = getRootPos(file);
         const Node root = getNode(file, rootPos);
         return search(file, root, id);
     }
@@ -388,11 +388,10 @@ public:
             std::cout << "File has no records.\n";
             return;
         }
-        const long long rootPos = getRootPosition(file);
+        long long rootPos = getRootPos(file);
         Node root = getNode(file, rootPos);
-        Header header = getHeader(file);
-        header.root = remove(file, root, rootPos, id);
-        updateHeader(file, header);
+        rootPos = remove(file, root, rootPos, id);
+        updateRootPos(file, rootPos);
         file.close();
     }
 
@@ -404,7 +403,7 @@ public:
             std::cout << "File has no records.\n";
             return records;
         }
-        long long rootPos = getRootPosition(file);
+        long long rootPos = getRootPos(file);
         searchRange(file, rootPos, min, max, records);
         return records;
     }
