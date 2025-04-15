@@ -483,10 +483,10 @@ int main() {
     end = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
     std::cout << "Records in range [200, 300]:\n";
-    for (const auto &rec: records) {
-        std::cout << "ID: " << rec.id << ", Name: " << rec.name
-                << ", Sold: " << rec.sold << ", Price: " << rec.price
-                << ", Date: " << rec.date << "\n";
+    for (const auto &[id, name, sold, price, date]: records) {
+        std::cout << "ID: " << id << ", Name: " << name
+                << ", Sold: " << sold << ", Price: " << price
+                << ", Date: " << date << "\n";
     }
     std::cout << "Total records found: " << records.size() << "\n";
     std::cout << "Range search time: " << duration.count() << " ns\n\n";
