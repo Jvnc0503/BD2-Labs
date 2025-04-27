@@ -172,6 +172,16 @@ SELECT *
 FROM cities
 LIMIT 80000;
 
+DROP INDEX IF EXISTS idx_cities20k_geom_gist;
+DROP INDEX IF EXISTS idx_cities40k_geom_gist;
+DROP INDEX IF EXISTS idx_cities60k_geom_gist;
+DROP INDEX IF EXISTS idx_cities80k_geom_gist;
+
+ANALYSE cities20k;
+ANALYSE cities40k;
+ANALYSE cities60k;
+ANALYSE cities80k;
+
 CREATE INDEX idx_cities20k_geom_gist ON cities20k USING GIST (ubicacion);
 CREATE INDEX idx_cities40k_geom_gist ON cities40k USING GIST (ubicacion);
 CREATE INDEX idx_cities60k_geom_gist ON cities60k USING GIST (ubicacion);
@@ -180,20 +190,24 @@ CREATE INDEX idx_cities80k_geom_gist ON cities80k USING GIST (ubicacion);
 VACUUM;
 VACUUM FULL;
 
-EXPLAIN ANALYSE
-SELECT c.name, c.country_name, ST_DISTANCE(c.ubicacion::geography, q.ubicacion::geography) AS distance
-FROM cities20k as c,
-     (SELECT ubicacion::geography
-      FROM cities
-      WHERE name = 'Osaka') as q
-ORDER BY c.ubicacion <-> q.ubicacion
+EXPLAIN ANALYZE
+SELECT name, ubicacion <-> ST_MakePoint(-78.91667, -8.08333)::geography AS distance
+FROM cities20k
+WHERE ST_DWithin(
+              ubicacion::geography,
+              ST_MakePoint(-78.91667, -8.08333)::geography,
+              1000000
+      )
+ORDER BY distance
 LIMIT 10;
 
-EXPLAIN ANALYSE
-SELECT c.name
-FROM cities20k as c,
-     (SELECT ubicacion2
-      FROM cities
-      WHERE name = 'Osaka') as q
-ORDER BY c.ubicacion2 <-> q.ubicacion2
-LIMIT 100;
+EXPLAIN ANALYZE
+SELECT name, ubicacion2 <-> ST_MakePoint(-78.91667, -8.08333)::geography AS distance
+FROM cities20k
+WHERE ST_DWithin(
+              ubicacion2::geography,
+              ST_MakePoint(-78.91667, -8.08333)::geography,
+              1000000
+      )
+ORDER BY distance
+LIMIT 10;
