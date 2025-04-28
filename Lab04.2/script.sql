@@ -187,27 +187,63 @@ CREATE INDEX idx_cities40k_geom_gist ON cities40k USING GIST (ubicacion);
 CREATE INDEX idx_cities60k_geom_gist ON cities60k USING GIST (ubicacion);
 CREATE INDEX idx_cities80k_geom_gist ON cities80k USING GIST (ubicacion);
 
+SELECT name, st_y(ubicacion::geometry) AS latitud, st_x(ubicacion::geometry) AS longitud
+FROM cities
+WHERE name = 'Tokyo';
+
+CREATE MATERIALIZED VIEW tokyo AS
+SELECT ubicacion
+FROM cities
+WHERE name = 'Tokyo'
+LIMIT 1;
+
 VACUUM;
 VACUUM FULL;
 
-EXPLAIN ANALYZE
-SELECT name, ubicacion <-> ST_MakePoint(-78.91667, -8.08333)::geography AS distance
-FROM cities20k
-WHERE ST_DWithin(
-              ubicacion::geography,
-              ST_MakePoint(-78.91667, -8.08333)::geography,
-              1000000
-      )
+--Con GiST
+EXPLAIN ANALYSE
+SELECT name, c.ubicacion <-> (SELECT ubicacion FROM tokyo) AS distance
+FROM cities80k AS c
 ORDER BY distance
-LIMIT 10;
+LIMIT 100;
 
-EXPLAIN ANALYZE
-SELECT name, ubicacion2 <-> ST_MakePoint(-78.91667, -8.08333)::geography AS distance
-FROM cities20k
-WHERE ST_DWithin(
-              ubicacion2::geography,
-              ST_MakePoint(-78.91667, -8.08333)::geography,
-              1000000
-      )
+--Sin GiST
+EXPLAIN ANALYSE
+SELECT name, c.ubicacion2 <-> (SELECT ubicacion FROM tokyo) AS distance
+FROM cities80k AS c
 ORDER BY distance
-LIMIT 10;
+LIMIT 100;
+
+--Pregunta 5
+
+--Decente(demora ~30 segundos)
+SELECT c1.name, distance
+FROM cities c1
+         JOIN LATERAL (
+    SELECT c1.ubicacion <-> c2.ubicacion AS distance
+    FROM cities c2
+    WHERE c1.id != c2.id
+    ORDER BY distance
+    LIMIT 1
+    ) c2 ON TRUE
+WHERE distance > 50000;
+
+--Muy Lento(no termina)
+SELECT c1.name
+FROM cities c1
+WHERE NOT EXISTS(SELECT 1
+                 FROM cities c2
+                 WHERE c1.id != c2.id
+                   AND c1.ubicacion <-> c2.ubicacion < 50000);
+
+--Óptimo (demora ~3 segundos)
+EXPLAIN ANALYSE
+SELECT c1.name
+FROM cities c1
+WHERE NOT EXISTS(SELECT 1
+                 FROM cities c2
+                 WHERE c1.id != c2.id
+                   AND ST_DWITHIN(c1.ubicacion, c2.ubicacion, 50000));
+
+VACUUM;
+VACUUM FULL;
