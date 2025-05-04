@@ -54,9 +54,8 @@ def update_bow_in_db(dataframe):
     cursor = conn.cursor()
     for index, row in dataframe.iterrows():
         bow = compute_bow(row["contenido"])
-        bow_json = json.dumps(bow)
         query = "UPDATE noticias SET bag_of_words = %s WHERE id = %s;"
-        cursor.execute(query, (bow_json, row["id"]))
+        cursor.execute(query, (json.dumps(bow), row["id"]))
     conn.commit()
     cursor.close()
     conn.close()
