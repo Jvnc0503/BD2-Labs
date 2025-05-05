@@ -4,6 +4,7 @@ import nltk
 import json
 import re
 import warnings
+import time
 
 nltk.download("punkt")
 nltk.download("punkt_tab")
@@ -78,16 +79,16 @@ def update_bow_in_db(dataframe):
 # B -> S | keyword
 # A -> OR | AND | AND-NOT
 
-def apply_boolean_query(query: str):
+def apply_boolean_query(query, table):
     tokens = query.split()  # list containing query arguments
 
     # simple sequential parser:
     expects_keyword = True
-    final_query = "SELECT * FROM noticias WHERE bag_of_words ? "
+    final_query = f"SELECT * FROM {table} WHERE bag_of_words ? "
 
     for w in tokens:
         if expects_keyword:
-            stemmed: str = stemmer.stem(w.lower())
+            stemmed = stemmer.stem(w.lower())
             final_query += "'" + stemmed + "'"
             expects_keyword = False
         else:
@@ -124,23 +125,47 @@ def test():
         "computción AND matemática AND-NOT física",
         "derecho OR leyes AND justicia",
         "historia OR geografía AND-NOT política",
-        "arte OR cultura AND-NOT entretenimiento"
+        "arte OR cultura AND-NOT entretenimiento",
+        "musica AND danza OR teatro",
+        "salud AND bienestar OR medicina",
     ]
-    for query in test_queries:
-        print(f"Probando consulta: '{query}'")
-        results = apply_boolean_query(query)
 
-        if results.empty:
-            print("No se encontraron documentos.")
-        else:
-            print("Resultados encontrados:")
-            print(results[["id", "contenido"]].head())
-        print("-" * 50)
+    tables = ["noticias", "noticias600", "noticias300", "noticias150"]
+    results = []
+    time_totals = {
+        "noticias": [],
+        "noticias150": [],
+        "noticias300": [],
+        "noticias600": []
+    }
+    
+    for table in tables:
+        for query in test_queries:
+            start = time.time()
+            df = apply_boolean_query(query, table)
+            end = time.time()
+            elapsed_ms = (end - start) * 1000  # Convertir a milisegundos
+            time_totals[table].append(elapsed_ms)
+            results.append(
+                {"tabla": table, "query": query, "tiempo_ms": elapsed_ms, "resultados": len(df)}
+            )
+            print(f"{table} | {query} | {elapsed_ms:.2f} ms | {len(df)} resultados")
+
+    print("\nPromedio de tiempo por tabla:")
+    for table in tables:
+        times = time_totals[table]
+        avg = sum(times) / len(times) if times else 0
+        print(f"{table}: {avg:.2f} ms")
+
+    with open("resultados.json", "w", encoding="utf-8") as f:
+        json.dump(results, f, ensure_ascii=False, indent=4)
+
+    print("Resultados guardados en resultados.csv")
     
 
 noticias_df = fetch_data()
 stopwords = fetch_stopwords()
+print(noticias_df)
 #update_bow_in_db(noticias_df)
-
-test()
+#test()
 
