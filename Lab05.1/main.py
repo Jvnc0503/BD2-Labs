@@ -2,10 +2,22 @@ import psycopg2
 import pandas as pd
 import nltk
 import json
+import re
+import warnings
 
 nltk.download("punkt")
 nltk.download("punkt_tab")
+nltk.download("wordnet")
+nltk.download("omw-1.4")
 stemmer = nltk.stem.SnowballStemmer("spanish")
+lemmatizer = nltk.stem.WordNetLemmatizer()
+
+# Omitir advertencias de pandas sobre SQLAlchemy
+warnings.filterwarnings(
+    "ignore",
+    message="pandas only supports SQLAlchemy connectable",
+    category=UserWarning,
+)
 
 def connect_db():
     conn = psycopg2.connect(
@@ -34,6 +46,7 @@ def fetch_stopwords():
 
 def preprocess(text):
     text = text.lower()
+    text = re.sub(r'[^a-záéíóúñü\s]', '', text)
     tokens = nltk.word_tokenize(text, "spanish")
     filtered = [token for token in tokens if token not in stopwords]
     stem = [stemmer.stem(w) for w in filtered]
@@ -59,8 +72,75 @@ def update_bow_in_db(dataframe):
     conn.commit()
     cursor.close()
     conn.close()
+
+# grammar:
+# S -> S A B | keyword
+# B -> S | keyword
+# A -> OR | AND | AND-NOT
+
+def apply_boolean_query(query: str):
+    tokens = query.split()  # list containing query arguments
+
+    # simple sequential parser:
+    expects_keyword = True
+    final_query = "SELECT * FROM noticias WHERE bag_of_words ? "
+
+    for w in tokens:
+        if expects_keyword:
+            stemmed: str = stemmer.stem(w.lower())
+            final_query += "'" + stemmed + "'"
+            expects_keyword = False
+        else:
+            w = w.lower()
+            if w == "or":
+                final_query += " OR bag_of_words ? "
+            elif w == "and":
+                final_query += " AND bag_of_words ? "
+            elif w == "and-not":
+                final_query += " AND NOT bag_of_words ? "
+            else:
+                print("ERROR: INVALID QUERY, UNRECOGNIZED OPERATOR " + w)
+                return pd.DataFrame()
+            expects_keyword = True
+
+    if expects_keyword is True:
+        print("ERROR: EXPECTED KEYWORD AT END")
+
+    final_query += ";"
+
+    # actual query time
+    conn = connect_db()
+    df = pd.read_sql(final_query, conn)
+    conn.close()
+
+    return df
+
+def test():
+    test_queries = [
+        "ingeniería OR software AND desarrollo",
+        "inteligencia AND artificial AND-NOT humano",
+        "ciencia OR tecnología AND-NOT medicina",
+        "educación AND aprendizaje OR enseñanza",
+        "computción AND matemática AND-NOT física",
+        "derecho OR leyes AND justicia",
+        "historia OR geografía AND-NOT política",
+        "arte OR cultura AND-NOT entretenimiento"
+    ]
+    for query in test_queries:
+        print(f"Probando consulta: '{query}'")
+        results = apply_boolean_query(query)
+
+        if results.empty:
+            print("No se encontraron documentos.")
+        else:
+            print("Resultados encontrados:")
+            print(results[["id", "contenido"]].head())
+        print("-" * 50)
     
 
 noticias_df = fetch_data()
 stopwords = fetch_stopwords()
-update_bow_in_db(noticias_df)
+#update_bow_in_db(noticias_df)
+
+test()
+
