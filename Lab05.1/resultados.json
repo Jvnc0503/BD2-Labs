@@ -2,241 +2,241 @@
     {
         "tabla": "noticias",
         "query": "ingeniería OR software AND desarrollo",
-        "tiempo_ms": 179.26335334777832,
+        "tiempo_ms": 80.47151565551758,
         "resultados": 51
     },
     {
         "tabla": "noticias",
         "query": "inteligencia AND artificial AND-NOT humano",
-        "tiempo_ms": 67.36111640930176,
+        "tiempo_ms": 70.97578048706055,
         "resultados": 30
     },
     {
         "tabla": "noticias",
         "query": "ciencia OR tecnología AND-NOT medicina",
-        "tiempo_ms": 109.62343215942383,
+        "tiempo_ms": 111.96470260620117,
         "resultados": 341
     },
     {
         "tabla": "noticias",
         "query": "educación AND aprendizaje OR enseñanza",
-        "tiempo_ms": 75.61159133911133,
+        "tiempo_ms": 70.66941261291504,
         "resultados": 24
     },
     {
         "tabla": "noticias",
         "query": "computción AND matemática AND-NOT física",
-        "tiempo_ms": 60.869455337524414,
+        "tiempo_ms": 67.3213005065918,
         "resultados": 0
     },
     {
         "tabla": "noticias",
         "query": "derecho OR leyes AND justicia",
-        "tiempo_ms": 75.61230659484863,
+        "tiempo_ms": 91.2013053894043,
         "resultados": 71
     },
     {
         "tabla": "noticias",
         "query": "historia OR geografía AND-NOT política",
-        "tiempo_ms": 83.25624465942383,
+        "tiempo_ms": 85.46280860900879,
         "resultados": 118
     },
     {
         "tabla": "noticias",
         "query": "arte OR cultura AND-NOT entretenimiento",
-        "tiempo_ms": 76.74217224121094,
+        "tiempo_ms": 59.6466064453125,
         "resultados": 73
     },
     {
         "tabla": "noticias",
         "query": "musica AND danza OR teatro",
-        "tiempo_ms": 66.86282157897949,
+        "tiempo_ms": 52.83713340759277,
         "resultados": 7
     },
     {
         "tabla": "noticias",
         "query": "salud AND bienestar OR medicina",
-        "tiempo_ms": 72.8917121887207,
+        "tiempo_ms": 48.57063293457031,
         "resultados": 33
     },
     {
         "tabla": "noticias600",
         "query": "ingeniería OR software AND desarrollo",
-        "tiempo_ms": 60.337066650390625,
+        "tiempo_ms": 43.1821346282959,
         "resultados": 27
     },
     {
         "tabla": "noticias600",
         "query": "inteligencia AND artificial AND-NOT humano",
-        "tiempo_ms": 60.794830322265625,
+        "tiempo_ms": 41.27860069274902,
         "resultados": 15
     },
     {
         "tabla": "noticias600",
         "query": "ciencia OR tecnología AND-NOT medicina",
-        "tiempo_ms": 81.87723159790039,
+        "tiempo_ms": 58.40611457824707,
         "resultados": 159
     },
     {
         "tabla": "noticias600",
         "query": "educación AND aprendizaje OR enseñanza",
-        "tiempo_ms": 62.27684020996094,
+        "tiempo_ms": 52.582502365112305,
         "resultados": 16
     },
     {
         "tabla": "noticias600",
         "query": "computción AND matemática AND-NOT física",
-        "tiempo_ms": 58.59994888305664,
+        "tiempo_ms": 36.73100471496582,
         "resultados": 0
     },
     {
         "tabla": "noticias600",
         "query": "derecho OR leyes AND justicia",
-        "tiempo_ms": 64.69154357910156,
+        "tiempo_ms": 43.26057434082031,
         "resultados": 34
     },
     {
         "tabla": "noticias600",
         "query": "historia OR geografía AND-NOT política",
-        "tiempo_ms": 66.76006317138672,
+        "tiempo_ms": 48.76542091369629,
         "resultados": 51
     },
     {
         "tabla": "noticias600",
         "query": "arte OR cultura AND-NOT entretenimiento",
-        "tiempo_ms": 69.44632530212402,
+        "tiempo_ms": 186.51723861694336,
         "resultados": 34
     },
     {
         "tabla": "noticias600",
         "query": "musica AND danza OR teatro",
-        "tiempo_ms": 64.06593322753906,
+        "tiempo_ms": 259.62376594543457,
         "resultados": 3
     },
     {
         "tabla": "noticias600",
         "query": "salud AND bienestar OR medicina",
-        "tiempo_ms": 62.41559982299805,
+        "tiempo_ms": 75.02102851867676,
         "resultados": 19
     },
     {
         "tabla": "noticias300",
         "query": "ingeniería OR software AND desarrollo",
-        "tiempo_ms": 58.66122245788574,
+        "tiempo_ms": 65.60325622558594,
         "resultados": 15
     },
     {
         "tabla": "noticias300",
         "query": "inteligencia AND artificial AND-NOT humano",
-        "tiempo_ms": 58.9451789855957,
+        "tiempo_ms": 61.13696098327637,
         "resultados": 10
     },
     {
         "tabla": "noticias300",
         "query": "ciencia OR tecnología AND-NOT medicina",
-        "tiempo_ms": 65.47379493713379,
+        "tiempo_ms": 72.26753234863281,
         "resultados": 82
     },
     {
         "tabla": "noticias300",
         "query": "educación AND aprendizaje OR enseñanza",
-        "tiempo_ms": 64.99958038330078,
+        "tiempo_ms": 60.12129783630371,
         "resultados": 8
     },
     {
         "tabla": "noticias300",
         "query": "computción AND matemática AND-NOT física",
-        "tiempo_ms": 147.57728576660156,
+        "tiempo_ms": 58.28976631164551,
         "resultados": 0
     },
     {
         "tabla": "noticias300",
         "query": "derecho OR leyes AND justicia",
-        "tiempo_ms": 162.11557388305664,
+        "tiempo_ms": 63.7514591217041,
         "resultados": 20
     },
     {
         "tabla": "noticias300",
         "query": "historia OR geografía AND-NOT política",
-        "tiempo_ms": 61.51175498962402,
+        "tiempo_ms": 68.92704963684082,
         "resultados": 31
     },
     {
         "tabla": "noticias300",
         "query": "arte OR cultura AND-NOT entretenimiento",
-        "tiempo_ms": 62.73484230041504,
+        "tiempo_ms": 64.24665451049805,
         "resultados": 15
     },
     {
         "tabla": "noticias300",
         "query": "musica AND danza OR teatro",
-        "tiempo_ms": 58.7916374206543,
+        "tiempo_ms": 57.159423828125,
         "resultados": 3
     },
     {
         "tabla": "noticias300",
         "query": "salud AND bienestar OR medicina",
-        "tiempo_ms": 60.61434745788574,
+        "tiempo_ms": 62.187910079956055,
         "resultados": 11
     },
     {
         "tabla": "noticias150",
         "query": "ingeniería OR software AND desarrollo",
-        "tiempo_ms": 62.88409233093262,
+        "tiempo_ms": 154.8633575439453,
         "resultados": 9
     },
     {
         "tabla": "noticias150",
         "query": "inteligencia AND artificial AND-NOT humano",
-        "tiempo_ms": 56.36405944824219,
+        "tiempo_ms": 174.36814308166504,
         "resultados": 6
     },
     {
         "tabla": "noticias150",
         "query": "ciencia OR tecnología AND-NOT medicina",
-        "tiempo_ms": 165.4989719390869,
+        "tiempo_ms": 67.84391403198242,
         "resultados": 42
     },
     {
         "tabla": "noticias150",
         "query": "educación AND aprendizaje OR enseñanza",
-        "tiempo_ms": 64.74876403808594,
+        "tiempo_ms": 56.44702911376953,
         "resultados": 1
     },
     {
         "tabla": "noticias150",
         "query": "computción AND matemática AND-NOT física",
-        "tiempo_ms": 57.084083557128906,
+        "tiempo_ms": 155.87162971496582,
         "resultados": 0
     },
     {
         "tabla": "noticias150",
         "query": "derecho OR leyes AND justicia",
-        "tiempo_ms": 61.173439025878906,
+        "tiempo_ms": 76.98178291320801,
         "resultados": 9
     },
     {
         "tabla": "noticias150",
         "query": "historia OR geografía AND-NOT política",
-        "tiempo_ms": 155.52306175231934,
+        "tiempo_ms": 75.83212852478027,
         "resultados": 18
     },
     {
         "tabla": "noticias150",
         "query": "arte OR cultura AND-NOT entretenimiento",
-        "tiempo_ms": 60.296058654785156,
+        "tiempo_ms": 59.10944938659668,
         "resultados": 6
     },
     {
         "tabla": "noticias150",
         "query": "musica AND danza OR teatro",
-        "tiempo_ms": 56.040287017822266,
+        "tiempo_ms": 57.466983795166016,
         "resultados": 2
     },
     {
         "tabla": "noticias150",
         "query": "salud AND bienestar OR medicina",
-        "tiempo_ms": 57.11627006530762,
+        "tiempo_ms": 58.57682228088379,
         "resultados": 6
     }
 ]

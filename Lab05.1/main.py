@@ -165,7 +165,8 @@ def test():
 
 noticias_df = fetch_data()
 stopwords = fetch_stopwords()
-print(noticias_df)
-#update_bow_in_db(noticias_df)
-#test()
+#print(noticias_df)
+#print(stopwords)
+update_bow_in_db(noticias_df)
+test()
 
