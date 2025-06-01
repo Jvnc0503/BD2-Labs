@@ -52,6 +52,16 @@ select id,
            round(random() * 1000),
            round(random() * 1000),
            round(random() * 1000),
+           round(random() * 1000),
+           round(random() * 1000),
+           round(random() * 1000),
+           round(random() * 1000),
+           round(random() * 1000),
+           round(random() * 1000),
+           round(random() * 1000),
+           round(random() * 1000),
+           round(random() * 1000),
+           round(random() * 1000),
            round(random() * 1000)
            ])
 from generate_series(1, 100000) as id;
