@@ -24,3 +24,6 @@ create index if not exists idx_vector_ivfflat
 set ivfflat.probes = 10;
 
 -- hacer la query desde python
+
+select count(*)
+from embeddings_with_vector;
