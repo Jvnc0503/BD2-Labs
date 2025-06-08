@@ -146,3 +146,24 @@ from (select count(*) as count
 union all
 select 'original' as partition, count(*) as count
 from employees;
+
+vacuum full employees;
+vacuum full employees_2;
+
+explain analyse
+select *
+from employees_2
+where date_part('year', hire_date) <= 1987;
+
+explain analyse
+select *
+from employees_2
+where date_part('year', hire_date) between 1988 and 1991;
+
+explain analyse
+select *
+from employees_2
+where date_part('year', hire_date) >= 1992;
+
+create index if not exists employees_hire_date_idx on employees (hire_date);
+create index if not exists employees_2_hire_date_idx on employees_2 (hire_date);
