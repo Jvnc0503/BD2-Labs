@@ -165,5 +165,39 @@ select *
 from employees_2
 where date_part('year', hire_date) >= 1992;
 
-create index if not exists employees_hire_date_idx on employees (hire_date);
-create index if not exists employees_2_hire_date_idx on employees_2 (hire_date);
+drop index if exists employees_hire_date_idx;
+drop index if exists employees_2_hire_date_idx;
+
+create index if not exists employees_hire_date_idx on employees using btree (hire_date);
+create index if not exists employees_2_hire_date_idx on employees_2 using btree (hire_date);
+
+--P3
+alter table employees
+    add column salary int;
+
+select *
+from employees
+where salary is not null
+limit 10;
+
+update employees
+set salary = (select s.salary
+              from salaries s
+              where s.emp_no = employees.emp_no
+              order by s.from_date desc
+              limit 1);
+
+drop table if exists employees_3;
+
+create table if not exists employees_3
+(
+    emp_no     int,
+    birth_date date,
+    first_name varchar(14),
+    last_name  varchar(16),
+    gender     character(1),
+    hire_date  date,
+    dept_no    varchar(5),
+    from_date  date,
+    salary     int
+);
