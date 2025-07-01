@@ -1,0 +1,110 @@
+\section{P1: Gestión de Productos y Pedidos}
+
+\subsection{Colecciones y Datos}
+
+Primero, se crearon las~\hyperref[fig:collections]{colecciones}:
+
+\begin{minted}{javascript}
+use lab13
+db.createCollection("Productos")
+db.createCollection("Clientes")
+db.createCollection("Pedidos")
+\end{minted}
+
+Luego, se insertaron los datos de los archivos json desde \hyperref[fig:clientes]{MongoDB Compass}. Además,
+se generaron datos adicionales con ChatGPT para evaluar mejor las consultas.
+
+\subsection{Consultas}
+
+Los resultados de estas consultas se pueden ver en la sección de \hyperref[consultas]{consultas} del anexo.
+
+$\bullet$ \textbf{Obtener todos los clientes de Chile:} Esta consulta filtra los documentos por el subcampo \textit{país}
+del campo \textit{dirección}.
+\begin{minted}{javascript}
+db.clientes.find({"direccion.pais": "Chile"})
+\end{minted}
+
+$\bullet$ \textbf{Obtener los pedidos de un cliente específico (por ID):} Similar a la consulta anterior, se hace
+un filtrado por el campo \textit{id$\_$cliente} de los pedidos.
+\begin{minted}{javascript}
+db.pedidos.find({"id_cliente": 1})
+\end{minted}
+
+$\bullet$ \textbf{Obtener los pedidos con un total superior a cierto valor:} El filtrado se realiza en el campo
+\textit{total$\_$pedido}, y seleccionamos los atributos más relevantes.
+\begin{minted}{javascript}
+db.pedidos.find(
+    {"total_pedido": {$gt: 800}},
+    {"id_cliente": 1, "id_pedido": 1, "total_pedido": 1, "_id": 0}
+)
+\end{minted}
+
+$\bullet$ \textbf{Contar el número total de pedidos entre un rango de fechas:} Primero, realizamos un \textit{match} para seleccionar
+los pedidos que cumplen con el criterio de fecha, y usamos \textit{count} para contar la cantidad de pedidos que cumplen la condicion.
+\begin{minted}{javascript}
+db.pedidos.aggregate([
+    {$match:{"fecha_pedido": {$gte: "2024-09-17", $lt: "2024-09-22"}}},
+    {$count: "total"}
+])
+\end{minted}
+
+$\bullet$ \textbf{¿Cuáles son los $k$ productos más vendidos?} En esta consulta, usamos \textit{unwind} para desglosar los arreglos
+de productos de cada pedido. Luego, los agrupamos por \textit{id$\_$producto}, y hallamos el total usando \textit{sum}. Para filtrar los
+$k$ productos más vendidos, ordenamos por cantidad y limitamos el output.
+\begin{minted}{javascript}
+db.pedidos.aggregate([
+    {$unwind: "$productos"},
+    {$group: {
+            _id: "$productos.id_producto",
+            cantidad: {$sum: "$productos.cantidad"}
+        }
+    },
+    {$sort: {"cantidad": -1}},
+    {$limit: 5}
+])
+\end{minted}
+
+Nota: En este ejemplo, obtenemos los 5 productos más vendidos. Podemos
+reemplazar el 5 por cualquier otro número.
+
+$\bullet$ \textbf{¿Quiénes son los clientes más frecuentes?} Para la consulta, agrupamos los pedidos por el id del cliente,
+y hacemos la sumatoria de la cantidad de pedidos. Finalmente, ordenamos por cantidad de pedidos y limitamos el output.
+\begin{minted}{javascript}
+db.pedidos.aggregate([
+    {$group: {
+        _id: "$id_cliente",
+        n_pedidos: {$sum: 1}
+        }
+    },
+    {$sort: {"n_pedidos": -1}},
+    {$limit: 5}
+])
+\end{minted}
+
+Nota: En este ejemplo, obtenemos los 5 clientes más frecuentes.
+
+\subsection{Reto Adicional}
+
+Para crear los \hyperref[fig:creacionindices]{índices} en los campos \texttt{fecha\_pedido} y \texttt{id\_cliente}, usamos
+las siguientes consultas:
+
+\begin{minted}{javascript}
+db.pedidos.createIndex({ fecha_pedido: 1 })
+db.pedidos.createIndex({ id_cliente: 1 })
+\end{minted}
+
+Para utilizar el primer índice, podemos realizar una búsqueda de pedidos en un rango de fechas:
+
+\begin{minted}{javascript}
+db.pedidos.find({
+    "fecha_pedido": { $gte: "2024-09-15", $lt: "2024-09-21" }
+})
+\end{minted}
+
+Y para el segundo índice, buscar los pedidos realizados por un cliente en particular:
+
+\begin{minted}{javascript}
+db.pedidos.find({
+    "id_cliente": 3
+})
+\end{minted}

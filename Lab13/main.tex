@@ -1,0 +1,75 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{minted}
+
+% Package to make citations superscrit with brackets
+%\usepackage[super,square]{natbib}
+
+% Package to change margin size
+\usepackage{anysize}
+\marginsize{2cm}{2cm}{1cm}{2cm}
+% Package to make headers
+\usepackage{fancyhdr}
+\setlength{\headheight}{13.6pt} % Fix for fancyhdr warning
+\renewcommand{\headrulewidth}{0pt}
+% Package for highligths
+\usepackage{soul}
+% Colors for the references links
+\usepackage[dvipsnames]{xcolor}
+% Package to link references
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,      
+    urlcolor=blue,
+}
+% Package for lorem ipsum
+\usepackage{lipsum}
+% Package for multicolumn
+\usepackage{multicol}
+% Package for removing paragraph identations
+\usepackage{parskip}
+\setlength\columnsep{18pt}
+% Sets abstract
+\renewenvironment{abstract}
+ {\par\noindent\textbf{\abstractname}\ \ignorespaces\\}
+ {\par\noindent\medskip}
+
+\usepackage{graphicx}
+
+\usepackage{amsmath}
+
+\usepackage{caption}
+
+\usepackage{amssymb}
+
+\usepackage{tikz}
+
+\usepackage{float}
+
+\usepackage{listings}
+
+\begin{document}
+
+\input{./cover.tex}
+
+% Makes header
+\pagestyle{fancy}
+\thispagestyle{empty}
+\fancyhead[R]{\textit{Universidad de Ingeniería y Tecnología --- UTEC}}
+\fancyhead[L]{}
+% Makes footnotes with an asterisk
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+
+\medskip
+\input{./p1.tex}
+\input{./p2.tex}
+\newpage
+
+\appendix
+\input{./appendix.tex}
+
+\end{document}

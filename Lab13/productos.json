@@ -1,0 +1,582 @@
+[
+  {
+    "id_producto": 1,
+    "nombre": "Laptop HP Envy",
+    "marca": "HP",
+    "precio": 1200,
+    "descuento": 10,
+    "categoria": "Electrónica",
+    "subcategoria": "Laptops",
+    "stock": 30,
+    "dimensiones": {
+      "ancho": 35.8,
+      "alto": 24.6,
+      "profundidad": 1.8,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 1.92,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Procesador Intel Core i7",
+      "16GB de RAM",
+      "512GB SSD",
+      "Pantalla táctil de 15 pulgadas"
+    ],
+    "calificacion": 4.5,
+    "descripcion": "Laptop HP Envy de 15 pulgadas con procesador Intel Core i7, 16GB de RAM, y disco SSD de 512GB. Ideal para trabajos intensivos de oficina o edición multimedia.",
+    "fecha_lanzamiento": "2023-08-01"
+  },
+  {
+    "id_producto": 2,
+    "nombre": "Teléfono Samsung Galaxy S21",
+    "marca": "Samsung",
+    "precio": 950,
+    "descuento": 5,
+    "categoria": "Electrónica",
+    "subcategoria": "Teléfonos móviles",
+    "stock": 50,
+    "dimensiones": {
+      "ancho": 7.1,
+      "alto": 15.1,
+      "profundidad": 0.8,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 0.169,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Cámara de 64MP",
+      "Pantalla AMOLED de 6.2 pulgadas",
+      "128GB de almacenamiento",
+      "5G"
+    ],
+    "calificacion": 4.8,
+    "descripcion": "Teléfono inteligente Samsung Galaxy S21 con cámara de 64MP, conectividad 5G, y pantalla AMOLED de 6.2 pulgadas. Perfecto para capturar fotos de alta calidad y navegar a altas velocidades.",
+    "fecha_lanzamiento": "2024-01-15"
+  },
+  {
+    "id_producto": 3,
+    "nombre": "Cafetera Nespresso",
+    "marca": "Nespresso",
+    "precio": 180,
+    "descuento": 0,
+    "categoria": "Hogar",
+    "subcategoria": "Cocina",
+    "stock": 75,
+    "dimensiones": {
+      "ancho": 12.0,
+      "alto": 23.5,
+      "profundidad": 32.0,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 2.3,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Compatible con cápsulas Nespresso",
+      "Función de apagado automático",
+      "Depósito de agua de 1L",
+      "Diferentes niveles de intensidad"
+    ],
+    "calificacion": 4.3,
+    "descripcion": "Cafetera Nespresso ideal para preparar café con cápsulas en casa, con diferentes opciones de intensidad y apagado automático.",
+    "fecha_lanzamiento": "2022-05-10"
+  },
+  {
+    "id_producto": 4,
+    "nombre": "Silla ergonómica de oficina",
+    "marca": "ErgoTech",
+    "precio": 350,
+    "descuento": 15,
+    "categoria": "Muebles",
+    "subcategoria": "Oficina",
+    "stock": 25,
+    "dimensiones": {
+      "ancho": 60.0,
+      "alto": 110.0,
+      "profundidad": 60.0,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 14.5,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Soporte lumbar ajustable",
+      "Reposacabezas",
+      "Brazos ajustables",
+      "Tela transpirable"
+    ],
+    "calificacion": 4.7,
+    "descripcion": "Silla ergonómica con soporte lumbar ajustable, diseñada para ofrecer comodidad durante largas jornadas de trabajo en la oficina o el hogar.",
+    "fecha_lanzamiento": "2023-02-20"
+  },
+  {
+    "id_producto": 5,
+    "nombre": "Televisor LG 55 pulgadas 4K",
+    "marca": "LG",
+    "precio": 750,
+    "descuento": 10,
+    "categoria": "Electrónica",
+    "subcategoria": "Televisores",
+    "stock": 40,
+    "dimensiones": {
+      "ancho": 123.0,
+      "alto": 71.5,
+      "profundidad": 5.8,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 17.0,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Resolución 4K UHD",
+      "Soporte para HDR10",
+      "Smart TV con AI ThinQ",
+      "Compatibilidad con Google Assistant y Alexa"
+    ],
+    "calificacion": 4.6,
+    "descripcion": "Televisor LG de 55 pulgadas con resolución 4K UHD y soporte para HDR10. Incluye funciones de Smart TV con IA ThinQ para una experiencia más inteligente.",
+    "fecha_lanzamiento": "2023-06-12"
+  },
+  {
+    "id_producto": 6,
+    "nombre": "Auriculares Sony WH-1000XM4",
+    "marca": "Sony",
+    "precio": 350,
+    "descuento": 5,
+    "categoria": "Electrónica",
+    "subcategoria": "Audio",
+    "stock": 60,
+    "dimensiones": {
+      "ancho": 7.8,
+      "alto": 20.0,
+      "profundidad": 18.0,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 0.254,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Cancelación de ruido activa",
+      "Hasta 30 horas de batería",
+      "Asistente de voz integrado",
+      "Conectividad Bluetooth 5.0"
+    ],
+    "calificacion": 4.9,
+    "descripcion": "Auriculares inalámbricos Sony WH-1000XM4 con cancelación activa de ruido, excelente calidad de sonido, y asistentes de voz integrados para una experiencia auditiva premium.",
+    "fecha_lanzamiento": "2024-03-05"
+  },
+  {
+    "id_producto": 7,
+    "nombre": "Apple iPad Pro 11",
+    "marca": "Apple",
+    "precio": 999,
+    "descuento": 8,
+    "categoria": "Electrónica",
+    "subcategoria": "Tablets",
+    "stock": 20,
+    "dimensiones": {
+      "ancho": 17.85,
+      "alto": 24.76,
+      "profundidad": 0.59,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 0.471,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Pantalla Liquid Retina de 11 pulgadas",
+      "Chip M1 de Apple",
+      "Compatibilidad con Apple Pencil y Magic Keyboard",
+      "5G"
+    ],
+    "calificacion": 4.9,
+    "descripcion": "Apple iPad Pro de 11 pulgadas con el potente chip M1, ideal para profesionales creativos y tareas de alto rendimiento. Compatible con Apple Pencil y Magic Keyboard.",
+    "fecha_lanzamiento": "2024-07-01"
+  },
+  {
+    "id_producto": 8,
+    "nombre": "Smartwatch Garmin Forerunner 245",
+    "marca": "Garmin",
+    "precio": 320,
+    "descuento": 7,
+    "categoria": "Electrónica",
+    "subcategoria": "Wearables",
+    "stock": 35,
+    "dimensiones": {
+      "ancho": 4.2,
+      "alto": 4.2,
+      "profundidad": 1.2,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 0.038,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "GPS integrado",
+      "Monitor de frecuencia cardíaca",
+      "Resistente al agua",
+      "Hasta 7 días de batería"
+    ],
+    "calificacion": 4.6,
+    "descripcion": "Reloj inteligente Garmin Forerunner 245 con GPS y monitor de frecuencia cardíaca, ideal para deportistas.",
+    "fecha_lanzamiento": "2023-09-10"
+  },
+  {
+    "id_producto": 9,
+    "nombre": "Refrigeradora Samsung RT38K5930S8",
+    "marca": "Samsung",
+    "precio": 850,
+    "descuento": 12,
+    "categoria": "Hogar",
+    "subcategoria": "Electrodomésticos",
+    "stock": 15,
+    "dimensiones": {
+      "ancho": 67.5,
+      "alto": 178.5,
+      "profundidad": 67.2,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 70,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Tecnología Twin Cooling Plus",
+      "Capacidad de 384L",
+      "Eficiencia energética A+",
+      "Dispensador de agua"
+    ],
+    "calificacion": 4.4,
+    "descripcion": "Refrigeradora Samsung con tecnología Twin Cooling Plus y gran capacidad de almacenamiento.",
+    "fecha_lanzamiento": "2022-11-05"
+  },
+  {
+    "id_producto": 10,
+    "nombre": "Monitor Dell UltraSharp 27",
+    "marca": "Dell",
+    "precio": 420,
+    "descuento": 10,
+    "categoria": "Electrónica",
+    "subcategoria": "Monitores",
+    "stock": 22,
+    "dimensiones": {
+      "ancho": 61.1,
+      "alto": 36.7,
+      "profundidad": 18.5,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 5.7,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Resolución QHD",
+      "Pantalla IPS",
+      "Ajuste de altura",
+      "Conectividad USB-C"
+    ],
+    "calificacion": 4.8,
+    "descripcion": "Monitor Dell UltraSharp de 27 pulgadas con resolución QHD y conectividad avanzada.",
+    "fecha_lanzamiento": "2023-04-18"
+  },
+  {
+    "id_producto": 11,
+    "nombre": "Aspiradora Xiaomi Mi Robot Vacuum",
+    "marca": "Xiaomi",
+    "precio": 299,
+    "descuento": 9,
+    "categoria": "Hogar",
+    "subcategoria": "Limpieza",
+    "stock": 40,
+    "dimensiones": {
+      "ancho": 35.0,
+      "alto": 9.6,
+      "profundidad": 35.0,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 3.6,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Navegación inteligente",
+      "Control por app",
+      "Autonomía de 120 min",
+      "Compatible con Alexa"
+    ],
+    "calificacion": 4.7,
+    "descripcion": "Aspiradora robot Xiaomi con navegación inteligente y control desde el móvil.",
+    "fecha_lanzamiento": "2024-02-12"
+  },
+  {
+    "id_producto": 12,
+    "nombre": "Cámara Canon EOS M50 Mark II",
+    "marca": "Canon",
+    "precio": 650,
+    "descuento": 6,
+    "categoria": "Electrónica",
+    "subcategoria": "Cámaras",
+    "stock": 18,
+    "dimensiones": {
+      "ancho": 11.6,
+      "alto": 8.8,
+      "profundidad": 5.9,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 0.387,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Sensor APS-C de 24.1MP",
+      "Video 4K",
+      "Wi-Fi y Bluetooth",
+      "Pantalla táctil abatible"
+    ],
+    "calificacion": 4.5,
+    "descripcion": "Cámara mirrorless Canon EOS M50 Mark II con sensor de 24.1MP y grabación en 4K.",
+    "fecha_lanzamiento": "2023-10-22"
+  },
+  {
+    "id_producto": 13,
+    "nombre": "Microondas LG Smart Inverter",
+    "marca": "LG",
+    "precio": 210,
+    "descuento": 8,
+    "categoria": "Hogar",
+    "subcategoria": "Cocina",
+    "stock": 28,
+    "dimensiones": {
+      "ancho": 47.6,
+      "alto": 27.2,
+      "profundidad": 38.8,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 9.5,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Tecnología Smart Inverter",
+      "Capacidad de 25L",
+      "Descongelado uniforme",
+      "Fácil limpieza"
+    ],
+    "calificacion": 4.4,
+    "descripcion": "Microondas LG con tecnología Smart Inverter para una cocción precisa y uniforme.",
+    "fecha_lanzamiento": "2022-08-30"
+  },
+  {
+    "id_producto": 14,
+    "nombre": "Impresora HP DeskJet 4155e",
+    "marca": "HP",
+    "precio": 120,
+    "descuento": 5,
+    "categoria": "Electrónica",
+    "subcategoria": "Impresoras",
+    "stock": 32,
+    "dimensiones": {
+      "ancho": 42.5,
+      "alto": 25.0,
+      "profundidad": 30.4,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 4.8,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Impresión inalámbrica",
+      "Escaneo y copiado",
+      "Compatible con HP+",
+      "Bajo consumo energético"
+    ],
+    "calificacion": 4.2,
+    "descripcion": "Impresora multifunción HP DeskJet 4155e con conectividad inalámbrica y escaneo.",
+    "fecha_lanzamiento": "2023-03-14"
+  },
+  {
+    "id_producto": 15,
+    "nombre": "Bicicleta Eléctrica Xiaomi Mi Smart",
+    "marca": "Xiaomi",
+    "precio": 950,
+    "descuento": 10,
+    "categoria": "Deportes",
+    "subcategoria": "Movilidad",
+    "stock": 10,
+    "dimensiones": {
+      "ancho": 58.0,
+      "alto": 110.0,
+      "profundidad": 170.0,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 18.5,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Motor de 250W",
+      "Autonomía de 45km",
+      "Pantalla LCD",
+      "Batería extraíble"
+    ],
+    "calificacion": 4.6,
+    "descripcion": "Bicicleta eléctrica Xiaomi con motor potente y batería de larga duración.",
+    "fecha_lanzamiento": "2024-05-01"
+  },
+  {
+    "id_producto": 16,
+    "nombre": "Consola PlayStation 5",
+    "marca": "Sony",
+    "precio": 650,
+    "descuento": 0,
+    "categoria": "Electrónica",
+    "subcategoria": "Consolas",
+    "stock": 12,
+    "dimensiones": {
+      "ancho": 39.0,
+      "alto": 10.4,
+      "profundidad": 26.0,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 4.5,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Soporte para juegos 4K",
+      "SSD ultrarrápido",
+      "Control DualSense",
+      "Retrocompatibilidad"
+    ],
+    "calificacion": 4.9,
+    "descripcion": "Consola Sony PlayStation 5 con gráficos de última generación y SSD ultrarrápido.",
+    "fecha_lanzamiento": "2023-11-19"
+  },
+  {
+    "id_producto": 17,
+    "nombre": "Freidora de aire Philips Essential",
+    "marca": "Philips",
+    "precio": 180,
+    "descuento": 6,
+    "categoria": "Hogar",
+    "subcategoria": "Cocina",
+    "stock": 20,
+    "dimensiones": {
+      "ancho": 26.4,
+      "alto": 29.5,
+      "profundidad": 36.0,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 4.5,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Capacidad de 4.1L",
+      "Tecnología Rapid Air",
+      "Fácil limpieza",
+      "Ahorro de energía"
+    ],
+    "calificacion": 4.7,
+    "descripcion": "Freidora de aire Philips con tecnología Rapid Air para cocinar con menos grasa.",
+    "fecha_lanzamiento": "2024-04-10"
+  },
+  {
+    "id_producto": 18,
+    "nombre": "Tablet Lenovo Tab P11 Pro",
+    "marca": "Lenovo",
+    "precio": 480,
+    "descuento": 9,
+    "categoria": "Electrónica",
+    "subcategoria": "Tablets",
+    "stock": 18,
+    "dimensiones": {
+      "ancho": 17.1,
+      "alto": 26.4,
+      "profundidad": 0.7,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 0.485,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Pantalla OLED de 11.5 pulgadas",
+      "Cuatro altavoces JBL",
+      "Batería de larga duración",
+      "Soporte para teclado"
+    ],
+    "calificacion": 4.5,
+    "descripcion": "Tablet Lenovo Tab P11 Pro con pantalla OLED y sonido envolvente JBL.",
+    "fecha_lanzamiento": "2023-12-05"
+  },
+  {
+    "id_producto": 19,
+    "nombre": "Cafetera Oster PrimaLatte",
+    "marca": "Oster",
+    "precio": 230,
+    "descuento": 7,
+    "categoria": "Hogar",
+    "subcategoria": "Cocina",
+    "stock": 25,
+    "dimensiones": {
+      "ancho": 22.0,
+      "alto": 32.0,
+      "profundidad": 34.0,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 4.2,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Espumador de leche",
+      "Compatible con café molido y cápsulas",
+      "Depósito de agua de 1.5L",
+      "Fácil limpieza"
+    ],
+    "calificacion": 4.4,
+    "descripcion": "Cafetera Oster PrimaLatte para preparar espressos y cappuccinos fácilmente.",
+    "fecha_lanzamiento": "2022-10-15"
+  },
+  {
+    "id_producto": 20,
+    "nombre": "Router TP-Link Archer AX50",
+    "marca": "TP-Link",
+    "precio": 140,
+    "descuento": 11,
+    "categoria": "Electrónica",
+    "subcategoria": "Redes",
+    "stock": 30,
+    "dimensiones": {
+      "ancho": 26.0,
+      "alto": 4.8,
+      "profundidad": 13.5,
+      "unidad": "cm"
+    },
+    "peso": {
+      "valor": 0.65,
+      "unidad": "kg"
+    },
+    "caracteristicas": [
+      "Wi-Fi 6",
+      "Velocidad hasta 3 Gbps",
+      "Control parental",
+      "4 antenas externas"
+    ],
+    "calificacion": 4.6,
+    "descripcion": "Router TP-Link Archer AX50 con tecnología Wi-Fi 6 y alta velocidad de conexión.",
+    "fecha_lanzamiento": "2023-07-25"
+  }
+]

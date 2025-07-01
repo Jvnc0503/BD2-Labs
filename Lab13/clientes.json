@@ -1,0 +1,242 @@
+[
+  {
+    "id_cliente": 1,
+    "nombre": "Carlos Pérez",
+    "email": "carlos.perez@mail.com",
+    "telefono": "555-1234",
+    "direccion": {
+      "calle": "Calle Falsa 123",
+      "ciudad": "Ciudad de México",
+      "pais": "México",
+      "codigo_postal": "10000"
+    }
+  },
+  {
+    "id_cliente": 2,
+    "nombre": "María García",
+    "email": "maria.garcia@mail.com",
+    "telefono": "555-5678",
+    "direccion": {
+      "calle": "Av. Los Almendros 55",
+      "ciudad": "Buenos Aires",
+      "pais": "Argentina",
+      "codigo_postal": "C1000"
+    }
+  },
+  {
+    "id_cliente": 3,
+    "nombre": "Juan López",
+    "email": "juan.lopez@mail.com",
+    "telefono": "555-9876",
+    "direccion": {
+      "calle": "Calle Independencia 45",
+      "ciudad": "Santiago",
+      "pais": "Chile",
+      "codigo_postal": "833001"
+    }
+  },
+  {
+    "id_cliente": 4,
+    "nombre": "Ana Fernández",
+    "email": "ana.fernandez@mail.com",
+    "telefono": "555-6543",
+    "direccion": {
+      "calle": "Calle Arco Iris 10",
+      "ciudad": "Bogotá",
+      "pais": "Colombia",
+      "codigo_postal": "110111"
+    }
+  },
+  {
+    "id_cliente": 5,
+    "nombre": "Lucía Torres",
+    "email": "lucia.torres@mail.com",
+    "telefono": "555-4321",
+    "direccion": {
+      "calle": "Av. Central 200",
+      "ciudad": "Lima",
+      "pais": "Perú",
+      "codigo_postal": "15001"
+    }
+  },
+  {
+    "id_cliente": 6,
+    "nombre": "Pedro Gómez",
+    "email": "pedro.gomez@mail.com",
+    "telefono": "555-8765",
+    "direccion": {
+      "calle": "Calle 8 No. 45",
+      "ciudad": "Monterrey",
+      "pais": "México",
+      "codigo_postal": "64000"
+    }
+  },
+  {
+    "id_cliente": 7,
+    "nombre": "Sofía Ramírez",
+    "email": "sofia.ramirez@mail.com",
+    "telefono": "555-3456",
+    "direccion": {
+      "calle": "Av. del Sol 123",
+      "ciudad": "Madrid",
+      "pais": "España",
+      "codigo_postal": "28001"
+    }
+  },
+  {
+    "id_cliente": 8,
+    "nombre": "Miguel Herrera",
+    "email": "miguel.herrera@mail.com",
+    "telefono": "555-7890",
+    "direccion": {
+      "calle": "Rua das Flores 50",
+      "ciudad": "São Paulo",
+      "pais": "Brasil",
+      "codigo_postal": "01000-000"
+    }
+  },
+  {
+    "id_cliente": 9,
+    "nombre": "Valentina Ríos",
+    "email": "valentina.rios@mail.com",
+    "telefono": "555-2345",
+    "direccion": {
+      "calle": "Carrera 7 #21-30",
+      "ciudad": "Medellín",
+      "pais": "Colombia",
+      "codigo_postal": "050021"
+    }
+  },
+  {
+    "id_cliente": 10,
+    "nombre": "Diego Castro",
+    "email": "diego.castro@mail.com",
+    "telefono": "555-6789",
+    "direccion": {
+      "calle": "Av. Italia 100",
+      "ciudad": "Montevideo",
+      "pais": "Uruguay",
+      "codigo_postal": "11300"
+    }
+  },
+  {
+    "id_cliente": 11,
+    "nombre": "Camila Silva",
+    "email": "camila.silva@mail.com",
+    "telefono": "555-1122",
+    "direccion": {
+      "calle": "Calle 12 de Octubre 15",
+      "ciudad": "Quito",
+      "pais": "Ecuador",
+      "codigo_postal": "170143"
+    }
+  },
+  {
+    "id_cliente": 12,
+    "nombre": "Andrés Martínez",
+    "email": "andres.martinez@mail.com",
+    "telefono": "555-3344",
+    "direccion": {
+      "calle": "Av. Libertad 300",
+      "ciudad": "Caracas",
+      "pais": "Venezuela",
+      "codigo_postal": "1010"
+    }
+  },
+  {
+    "id_cliente": 13,
+    "nombre": "Paula Jiménez",
+    "email": "paula.jimenez@mail.com",
+    "telefono": "555-5566",
+    "direccion": {
+      "calle": "Calle 9 Sur 22",
+      "ciudad": "Puebla",
+      "pais": "México",
+      "codigo_postal": "72000"
+    }
+  },
+  {
+    "id_cliente": 14,
+    "nombre": "Javier Ruiz",
+    "email": "javier.ruiz@mail.com",
+    "telefono": "555-7788",
+    "direccion": {
+      "calle": "Av. San Martín 400",
+      "ciudad": "Rosario",
+      "pais": "Argentina",
+      "codigo_postal": "2000"
+    }
+  },
+  {
+    "id_cliente": 15,
+    "nombre": "Gabriela Morales",
+    "email": "gabriela.morales@mail.com",
+    "telefono": "555-9900",
+    "direccion": {
+      "calle": "Calle Palma 18",
+      "ciudad": "San José",
+      "pais": "Costa Rica",
+      "codigo_postal": "10101"
+    }
+  },
+  {
+    "id_cliente": 16,
+    "nombre": "Fernando Díaz",
+    "email": "fernando.diaz@mail.com",
+    "telefono": "555-2233",
+    "direccion": {
+      "calle": "Av. República 77",
+      "ciudad": "Asunción",
+      "pais": "Paraguay",
+      "codigo_postal": "1209"
+    }
+  },
+  {
+    "id_cliente": 17,
+    "nombre": "Martina Paredes",
+    "email": "martina.paredes@mail.com",
+    "telefono": "555-4455",
+    "direccion": {
+      "calle": "Calle 5 de Mayo 60",
+      "ciudad": "Guadalajara",
+      "pais": "México",
+      "codigo_postal": "44100"
+    }
+  },
+  {
+    "id_cliente": 18,
+    "nombre": "Esteban Vargas",
+    "email": "esteban.vargas@mail.com",
+    "telefono": "555-6677",
+    "direccion": {
+      "calle": "Av. Colón 150",
+      "ciudad": "Panamá",
+      "pais": "Panamá",
+      "codigo_postal": "0801"
+    }
+  },
+  {
+    "id_cliente": 19,
+    "nombre": "Natalia Castillo",
+    "email": "natalia.castillo@mail.com",
+    "telefono": "555-8899",
+    "direccion": {
+      "calle": "Calle 25B 300",
+      "ciudad": "Montevideo",
+      "pais": "Uruguay",
+      "codigo_postal": "11800"
+    }
+  },
+  {
+    "id_cliente": 20,
+    "nombre": "Tomás Aguirre",
+    "email": "tomas.aguirre@mail.com",
+    "telefono": "555-1010",
+    "direccion": {
+      "calle": "Av. Kennedy 500",
+      "ciudad": "Santiago",
+      "pais": "Chile",
+      "codigo_postal": "7560994"
+    }
+  }
+]

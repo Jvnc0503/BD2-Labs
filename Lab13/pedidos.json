@@ -1,0 +1,338 @@
+[
+  {
+    "id_pedido": 101,
+    "id_cliente": 1,
+    "productos": [
+      {
+        "id_producto": 1,
+        "nombre": "Laptop HP Envy",
+        "cantidad": 1,
+        "precio_unitario": 1200
+      },
+      {
+        "id_producto": 3,
+        "nombre": "Cafetera Nespresso",
+        "cantidad": 2,
+        "precio_unitario": 180
+      }
+    ],
+    "total_pedido": 1560,
+    "fecha_pedido": "2024-09-15",
+    "estado": "Enviado"
+  },
+  {
+    "id_pedido": 102,
+    "id_cliente": 2,
+    "productos": [
+      {
+        "id_producto": 2,
+        "nombre": "Teléfono Samsung Galaxy S21",
+        "cantidad": 1,
+        "precio_unitario": 950
+      }
+    ],
+    "total_pedido": 950,
+    "fecha_pedido": "2024-09-15",
+    "estado": "Procesando"
+  },
+  {
+    "id_pedido": 103,
+    "id_cliente": 3,
+    "productos": [
+      {
+        "id_producto": 4,
+        "nombre": "Silla ergonómica de oficina",
+        "cantidad": 1,
+        "precio_unitario": 350
+      },
+      {
+        "id_producto": 5,
+        "nombre": "Televisor LG 55 pulgadas 4K",
+        "cantidad": 1,
+        "precio_unitario": 750
+      }
+    ],
+    "total_pedido": 1100,
+    "fecha_pedido": "2024-09-15",
+    "estado": "Entregado"
+  },
+  {
+    "id_pedido": 104,
+    "id_cliente": 3,
+    "productos": [
+      {
+        "id_producto": 5,
+        "nombre": "Televisor LG 55 pulgadas 4K",
+        "cantidad": 1,
+        "precio_unitario": 750
+      }
+    ],
+    "total_pedido": 750,
+    "fecha_pedido": "2024-09-18",
+    "estado": "Cancelado"
+  },
+  {
+    "id_pedido": 105,
+    "id_cliente": 3,
+    "productos": [
+      {
+        "id_producto": 6,
+        "nombre": "Auriculares Sony WH-1000XM4",
+        "cantidad": 1,
+        "precio_unitario": 350
+      }
+    ],
+    "total_pedido": 350,
+    "fecha_pedido": "2024-09-20",
+    "estado": "Procesando"
+  },
+  {
+    "id_pedido": 106,
+    "id_cliente": 3,
+    "productos": [
+      {
+        "id_producto": 7,
+        "nombre": "Apple iPad Pro 11",
+        "cantidad": 1,
+        "precio_unitario": 999
+      },
+      {
+        "id_producto": 1,
+        "nombre": "Laptop HP Envy",
+        "cantidad": 1,
+        "precio_unitario": 1200
+      }
+    ],
+    "total_pedido": 2199,
+    "fecha_pedido": "2024-09-20",
+    "estado": "Enviado"
+  },
+  {
+    "id_pedido": 107,
+    "id_cliente": 3,
+    "productos": [
+      {
+        "id_producto": 2,
+        "nombre": "Teléfono Samsung Galaxy S21",
+        "cantidad": 2,
+        "precio_unitario": 950
+      }
+    ],
+    "total_pedido": 1900,
+    "fecha_pedido": "2024-09-20",
+    "estado": "Entregado"
+  },
+  {
+    "id_pedido": 108,
+    "id_cliente": 8,
+    "productos": [
+      {
+        "id_producto": 3,
+        "nombre": "Cafetera Nespresso",
+        "cantidad": 1,
+        "precio_unitario": 180
+      },
+      {
+        "id_producto": 8,
+        "nombre": "Smartwatch Garmin Forerunner 245",
+        "cantidad": 1,
+        "precio_unitario": 320
+      }
+    ],
+    "total_pedido": 500,
+    "fecha_pedido": "2024-09-22",
+    "estado": "Procesando"
+  },
+  {
+    "id_pedido": 109,
+    "id_cliente": 9,
+    "productos": [
+      {
+        "id_producto": 9,
+        "nombre": "Refrigeradora Samsung RT38K5930S8",
+        "cantidad": 1,
+        "precio_unitario": 850
+      }
+    ],
+    "total_pedido": 850,
+    "fecha_pedido": "2024-09-23",
+    "estado": "Enviado"
+  },
+  {
+    "id_pedido": 110,
+    "id_cliente": 8,
+    "productos": [
+      {
+        "id_producto": 10,
+        "nombre": "Monitor Dell UltraSharp 27",
+        "cantidad": 1,
+        "precio_unitario": 420
+      },
+      {
+        "id_producto": 11,
+        "nombre": "Aspiradora Xiaomi Mi Robot Vacuum",
+        "cantidad": 1,
+        "precio_unitario": 299
+      }
+    ],
+    "total_pedido": 719,
+    "fecha_pedido": "2024-09-24",
+    "estado": "Entregado"
+  },
+  {
+    "id_pedido": 111,
+    "id_cliente": 11,
+    "productos": [
+      {
+        "id_producto": 12,
+        "nombre": "Cámara Canon EOS M50 Mark II",
+        "cantidad": 1,
+        "precio_unitario": 650
+      }
+    ],
+    "total_pedido": 650,
+    "fecha_pedido": "2024-09-27",
+    "estado": "Procesando"
+  },
+  {
+    "id_pedido": 112,
+    "id_cliente": 8,
+    "productos": [
+      {
+        "id_producto": 13,
+        "nombre": "Microondas LG Smart Inverter",
+        "cantidad": 1,
+        "precio_unitario": 210
+      }
+    ],
+    "total_pedido": 210,
+    "fecha_pedido": "2024-09-27",
+    "estado": "Enviado"
+  },
+  {
+    "id_pedido": 113,
+    "id_cliente": 13,
+    "productos": [
+      {
+        "id_producto": 14,
+        "nombre": "Impresora HP DeskJet 4155e",
+        "cantidad": 1,
+        "precio_unitario": 120
+      }
+    ],
+    "total_pedido": 120,
+    "fecha_pedido": "2024-09-27",
+    "estado": "Entregado"
+  },
+  {
+    "id_pedido": 114,
+    "id_cliente": 12,
+    "productos": [
+      {
+        "id_producto": 15,
+        "nombre": "Bicicleta Eléctrica Xiaomi Mi Smart",
+        "cantidad": 1,
+        "precio_unitario": 950
+      }
+    ],
+    "total_pedido": 950,
+    "fecha_pedido": "2024-09-28",
+    "estado": "Procesando"
+  },
+  {
+    "id_pedido": 115,
+    "id_cliente": 12,
+    "productos": [
+      {
+        "id_producto": 16,
+        "nombre": "Consola PlayStation 5",
+        "cantidad": 1,
+        "precio_unitario": 650
+      }
+    ],
+    "total_pedido": 650,
+    "fecha_pedido": "2024-09-29",
+    "estado": "Enviado"
+  },
+  {
+    "id_pedido": 116,
+    "id_cliente": 16,
+    "productos": [
+      {
+        "id_producto": 17,
+        "nombre": "Freidora de aire Philips Essential",
+        "cantidad": 1,
+        "precio_unitario": 180
+      }
+    ],
+    "total_pedido": 180,
+    "fecha_pedido": "2024-09-30",
+    "estado": "Entregado"
+  },
+  {
+    "id_pedido": 117,
+    "id_cliente": 17,
+    "productos": [
+      {
+        "id_producto": 18,
+        "nombre": "Tablet Lenovo Tab P11 Pro",
+        "cantidad": 1,
+        "precio_unitario": 480
+      }
+    ],
+    "total_pedido": 480,
+    "fecha_pedido": "2024-10-01",
+    "estado": "Procesando"
+  },
+  {
+    "id_pedido": 118,
+    "id_cliente": 20,
+    "productos": [
+      {
+        "id_producto": 19,
+        "nombre": "Cafetera Oster PrimaLatte",
+        "cantidad": 1,
+        "precio_unitario": 230
+      }
+    ],
+    "total_pedido": 230,
+    "fecha_pedido": "2024-10-02",
+    "estado": "Enviado"
+  },
+  {
+    "id_pedido": 119,
+    "id_cliente": 20,
+    "productos": [
+      {
+        "id_producto": 20,
+        "nombre": "Router TP-Link Archer AX50",
+        "cantidad": 1,
+        "precio_unitario": 140
+      }
+    ],
+    "total_pedido": 140,
+    "fecha_pedido": "2024-10-03",
+    "estado": "Entregado"
+  },
+  {
+    "id_pedido": 120,
+    "id_cliente": 20,
+    "productos": [
+      {
+        "id_producto": 1,
+        "nombre": "Laptop HP Envy",
+        "cantidad": 1,
+        "precio_unitario": 1200
+      },
+      {
+        "id_producto": 2,
+        "nombre": "Teléfono Samsung Galaxy S21",
+        "cantidad": 1,
+        "precio_unitario": 950
+      }
+    ],
+    "total_pedido": 2150,
+    "fecha_pedido": "2024-10-04",
+    "estado": "Procesando"
+  }
+]
