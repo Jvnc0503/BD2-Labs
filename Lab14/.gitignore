@@ -1,0 +1,14 @@
+_minted
+.venv
+.vscode
+*.aux
+*.bbl
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+main.pdf
+
+drake_lyrics
+milei_news
+data
