@@ -1,8 +1,5 @@
 select count(*) as count
-from my_keyspace.temperature_day;
-
-select *
-from my_keyspace.temperature_day;
+from temperature_day;
 
 select *
 from temperature_day

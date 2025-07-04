@@ -1,0 +1,4 @@
+set texto 'hola'
+expire texto 60
+get texto
+del texto
