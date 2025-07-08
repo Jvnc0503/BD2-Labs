@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  cassandra1:
+    image: cassandra:4.1
+    container_name: cassandra1
+    hostname: cassandra1
+    ports:
+      - "9042:9042"
+    environment:
+      CASSANDRA_CLUSTER_NAME: MyCluster
+      CASSANDRA_SEEDS: cassandra1,cassandra2,cassandra3
+      CASSANDRA_DC: DC1
+      CASSANDRA_RACK: RAC1
+      MAX_HEAP_SIZE: 1024M
+      HEAP_NEWSIZE: 256M
+    mem_limit: 1536m
+
+  cassandra2:
+    image: cassandra:4.1
+    container_name: cassandra2
+    hostname: cassandra2
+    depends_on:
+      - cassandra1
+    environment:
+      CASSANDRA_CLUSTER_NAME: MyCluster
+      CASSANDRA_SEEDS: cassandra1,cassandra2,cassandra3
+      CASSANDRA_DC: DC1
+      CASSANDRA_RACK: RAC1
+      MAX_HEAP_SIZE: 1024M
+      HEAP_NEWSIZE: 256M
+    mem_limit: 1536m
+
+  cassandra3:
+    image: cassandra:4.1
+    container_name: cassandra3
+    hostname: cassandra3
+    depends_on:
+      - cassandra1
+    environment:
+      CASSANDRA_CLUSTER_NAME: MyCluster
+      CASSANDRA_SEEDS: cassandra1,cassandra2,cassandra3
+      CASSANDRA_DC: DC1
+      CASSANDRA_RACK: RAC1
+      MAX_HEAP_SIZE: 1024M
+      HEAP_NEWSIZE: 256M
+    mem_limit: 1536m

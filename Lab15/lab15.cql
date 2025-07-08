@@ -105,7 +105,7 @@ create table if not exists sensor_by_date
     event_time       timestamp,
     measurement      double,
     primary key ( date, event_time )
-) with clustering order by (event_time desc) and
+) with clustering order by (event_time asc) and
         default_time_to_live = 604800; -- 7 days
 
 select event_time, measurement, ttl(measurement)
