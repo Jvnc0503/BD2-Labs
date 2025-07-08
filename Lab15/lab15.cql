@@ -71,6 +71,10 @@ VALUES ('1234ABCD', '2018-04-03 07:04:00', 24) USING TTL 86400;
 select sensor_id, event_time, temperature, ttl(temperature)
 from latest_temperatures;
 
+drop table if exists sensor_readings;
+drop table if exists sensor_anomalies;
+drop table if exists sensor_by_date;
+
 create table if not exists sensor_readings
 (
     measurement_type text,
@@ -80,4 +84,46 @@ create table if not exists sensor_readings
     measurement      double,
     primary key ( (measurement_type, sensor_id, date), event_time )
 ) with clustering order by (event_time desc) and
-        default_time_to_live = 604800;
+        default_time_to_live = 604800; -- 7 days
+
+create table if not exists sensor_anomalies
+(
+    measurement_type text,
+    sensor_id        text,
+    hour             text,
+    event_time       timestamp,
+    measurement      double,
+    primary key ( (measurement_type, sensor_id, hour), measurement, event_time)
+) with clustering order by (measurement asc, event_time desc) and
+        default_time_to_live = 7200; -- 2 hour
+
+create table if not exists sensor_by_date
+(
+    measurement_type text,
+    sensor_id        text,
+    date             text,
+    event_time       timestamp,
+    measurement      double,
+    primary key ( date, event_time )
+) with clustering order by (event_time desc) and
+        default_time_to_live = 604800; -- 7 days
+
+select event_time, measurement, ttl(measurement)
+from sensor_readings
+where measurement_type = 'temperatura'
+  and sensor_id = 'SENS001'
+  and date = '2025-08-07';
+
+select event_time, measurement
+from sensor_anomalies
+where measurement_type = 'temperatura'
+  and sensor_id = 'SENS001'
+  and hour = '2025-08-07T14'
+  and measurement < 15;
+
+select event_time, measurement
+from sensor_anomalies
+where measurement_type = 'temperatura'
+  and sensor_id = 'SENS001'
+  and hour = '2025-08-07T14'
+  and measurement > 30;
