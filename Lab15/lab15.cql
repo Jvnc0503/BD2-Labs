@@ -127,3 +127,9 @@ where measurement_type = 'temperatura'
   and sensor_id = 'SENS001'
   and hour = '2025-08-07T14'
   and measurement > 30;
+
+select *
+from sensor_readings
+where measurement_type = 'temperatura'
+  and sensor_id = 'SENS001'
+    allow filtering;
