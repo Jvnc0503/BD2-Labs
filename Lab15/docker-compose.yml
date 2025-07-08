@@ -1,17 +1,17 @@
-version: '3.8'
-
 services:
   cassandra1:
     image: cassandra:4.1
     container_name: cassandra1
     hostname: cassandra1
+    networks:
+      - cassandra-net
     ports:
       - "9042:9042"
     environment:
-      CASSANDRA_CLUSTER_NAME: MyCluster
-      CASSANDRA_SEEDS: cassandra1,cassandra2,cassandra3
+      CASSANDRA_CLUSTER_NAME: "CassandraCluster"
       CASSANDRA_DC: DC1
       CASSANDRA_RACK: RAC1
+      CASSANDRA_SEEDS: "cassandra1,cassandra2,cassandra3"
       MAX_HEAP_SIZE: 1024M
       HEAP_NEWSIZE: 256M
     mem_limit: 1536m
@@ -20,13 +20,15 @@ services:
     image: cassandra:4.1
     container_name: cassandra2
     hostname: cassandra2
+    networks:
+      - cassandra-net
     depends_on:
       - cassandra1
     environment:
-      CASSANDRA_CLUSTER_NAME: MyCluster
-      CASSANDRA_SEEDS: cassandra1,cassandra2,cassandra3
+      CASSANDRA_CLUSTER_NAME: "CassandraCluster"
       CASSANDRA_DC: DC1
       CASSANDRA_RACK: RAC1
+      CASSANDRA_SEEDS: "cassandra1,cassandra2,cassandra3"
       MAX_HEAP_SIZE: 1024M
       HEAP_NEWSIZE: 256M
     mem_limit: 1536m
@@ -35,13 +37,19 @@ services:
     image: cassandra:4.1
     container_name: cassandra3
     hostname: cassandra3
+    networks:
+      - cassandra-net
     depends_on:
       - cassandra1
     environment:
-      CASSANDRA_CLUSTER_NAME: MyCluster
-      CASSANDRA_SEEDS: cassandra1,cassandra2,cassandra3
+      CASSANDRA_CLUSTER_NAME: "CassandraCluster"
       CASSANDRA_DC: DC1
       CASSANDRA_RACK: RAC1
+      CASSANDRA_SEEDS: "cassandra1,cassandra2,cassandra3"
       MAX_HEAP_SIZE: 1024M
       HEAP_NEWSIZE: 256M
     mem_limit: 1536m
+
+networks:
+  cassandra-net:
+    driver: bridge
