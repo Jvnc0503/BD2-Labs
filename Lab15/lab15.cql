@@ -133,3 +133,15 @@ from sensor_readings
 where measurement_type = 'temperatura'
   and sensor_id = 'SENS001'
     allow filtering;
+
+drop table if exists temperature_measurements;
+
+create table if not exists temperature_measurements
+(
+    sensor_id   text,
+    date        text,
+    event_time  timestamp,
+    temperature double,
+    humidity    double,
+    primary key ((sensor_id, date), event_time)
+);
