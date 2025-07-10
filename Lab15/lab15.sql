@@ -29,3 +29,9 @@ from temperature_measurements
 where date = '2025-07-06'
   and event_time >= '2025-07-06 00:00:00'
 group by sensor_id;
+
+select sensor_id, event_time, temperature
+from temperature_measurements
+where date = '2025-07-06'
+  and event_time >= '2025-07-06 00:00:00'
+  and temperature < 30;

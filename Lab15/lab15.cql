@@ -159,3 +159,10 @@ from temperature_measurements
 where sensor_id = 'SENS003'
   and date = '2025-07-06'
 order by event_time desc;
+
+select sensor_id, event_time, temperature
+from temperature_measurements
+where date = '2025-07-06'
+  and event_time >= '2025-07-06 00:00:00'
+  and temperature < 30
+    allow filtering;
