@@ -23,3 +23,9 @@ from temperature_measurements
 where sensor_id = 'SENS003'
   and date = '2025-07-06'
 order by event_time desc;
+
+select sensor_id, avg(temperature) as avg_temp
+from temperature_measurements
+where date = '2025-07-06'
+  and event_time >= '2025-07-06 00:00:00'
+group by sensor_id;
