@@ -9,3 +9,17 @@ create table if not exists temperature_measurements
     humidity    double precision,
     primary key (sensor_id, date, event_time)
 );
+
+select count(distinct date)
+from temperature_measurements;
+
+select count(*)
+from temperature_measurements
+where sensor_id = 'SENS003'
+  and date = '2025-07-06';
+
+select event_time, temperature, humidity
+from temperature_measurements
+where sensor_id = 'SENS003'
+  and date = '2025-07-06'
+order by event_time desc;
