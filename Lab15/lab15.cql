@@ -148,3 +148,8 @@ create table if not exists temperature_measurements
 
 select count(*)
 from temperature_measurements;
+
+select *
+from temperature_measurements
+where sensor_id = 'SENS003'
+  and date = '2025-07-06';
