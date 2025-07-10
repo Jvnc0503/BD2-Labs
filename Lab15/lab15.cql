@@ -145,3 +145,6 @@ create table if not exists temperature_measurements
     humidity    double,
     primary key ((sensor_id, date), event_time)
 );
+
+select count(*)
+from temperature_measurements;
